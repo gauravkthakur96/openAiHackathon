@@ -527,10 +527,10 @@
 <div style="padding-top:32px;display:grid;grid-template-columns:1fr 300px;gap:44px;align-items:start">
   <div>
     <h1 style="font-size:38px;margin-bottom:4px"><span style="{{ sEn }}">File a complaint</span><span style="{{ sHi }}">शिकायत दर्ज करें</span></h1>
-    <p style="color:var(--color-neutral-700);font-size:15px;max-width:62ch">Four steps, about ten minutes. Nothing is submitted until you review it at the end, and your answers are saved as a draft as you go.</p>
+    <p style="color:var(--color-neutral-700);font-size:15px;max-width:62ch">Five steps, about fifteen minutes. Nothing is submitted until you review it at the end, and your answers are saved as a draft as you go.</p>
 
     <div style="display:flex;gap:0;margin:26px 0 28px;border:1px solid var(--color-divider)">
-      <sc-for list="{{ steps }}" as="st" hint-placeholder-count="4">
+      <sc-for list="{{ steps }}" as="st" hint-placeholder-count="5">
         <div style="{{ st.style }}">
           <span style="font-family:ui-monospace,Menlo,monospace;font-size:11px;opacity:.7">STEP {{ st.n }}</span>
           <span style="font-family:var(--font-heading);font-size:15px;display:block;line-height:1.2">{{ st.label }}</span>
@@ -541,19 +541,20 @@
     <sc-if value="{{ step1 }}">
     <div>
       <h3>Is this the right place for your problem?</h3>
-      <p style="font-size:14px;color:var(--color-neutral-700);max-width:62ch">The Authority can only decide disputes about registered real-estate projects in Jharkhand. Answering this saves you a rejected filing and a wasted fee.</p>
+      <p style="font-size:14px;color:var(--color-neutral-700);max-width:62ch">The Authority can only decide disputes about real-estate projects in Jharkhand. Answering this saves you a rejected filing and a wasted fee.</p>
       <div class="blueprint" style="padding:20px;margin-top:16px">
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
         <div class="field" style="margin-bottom:16px">
-          <label>What went wrong?</label>
+          <label>What went wrong? Choose all that apply.</label>
           <div style="display:flex;flex-direction:column;gap:9px;margin-top:6px">
-            <sc-for list="{{ grounds }}" as="g" hint-placeholder-count="5">
+            <sc-for list="{{ issueCats }}" as="g" hint-placeholder-count="8">
               <button onClick="{{ g.pick }}" style="{{ g.style }}">
                 <span style="{{ g.dotStyle }}"></span>
                 <span><strong style="font-family:var(--font-heading);font-weight:600">{{ g.title }}</strong><span style="display:block;font-size:12px;color:var(--color-neutral-600)">{{ g.note }}</span></span>
               </button>
             </sc-for>
           </div>
+          <p style="font-size:12px;color:var(--color-neutral-600);margin-top:8px">Selling an unregistered project is itself an offence under Section 3 — if that is your situation, pick "Something else" and say so in the facts of your case.</p>
         </div>
         <div class="field">
           <label for="jcp">Which project is this about?</label>
@@ -571,46 +572,132 @@
 
     <sc-if value="{{ step2 }}">
     <div>
-      <h3>Tell us what happened</h3>
-      <p style="font-size:14px;color:var(--color-neutral-700);max-width:62ch">Write it the way you would explain it to a neighbour. Legal drafting is not required — the bench reads your own words.</p>
-      <div class="blueprint" style="padding:20px;margin-top:16px;display:grid;gap:16px">
+      <h3>Who is complaining, and against whom</h3>
+      <p style="font-size:14px;color:var(--color-neutral-700);max-width:62ch">Add every allottee named on the agreement. You can add more than one promoter, agent or contractor if more than one is responsible.</p>
+
+      <h5 style="margin-top:20px">You, and any co-allottees</h5>
+      <sc-for list="{{ complainants }}" as="c" hint-placeholder-count="2">
+        <div class="blueprint" style="padding:18px;margin-top:12px;display:grid;gap:14px">
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-          <div class="field"><label for="jn">Your name</label><input id="jn" class="input" placeholder="As on your booking agreement"></div>
-          <div class="field"><label for="jm">Mobile number</label><input id="jm" class="input" placeholder="10 digits"></div>
-          <div class="field"><label for="ju">Unit or plot number</label><input id="ju" class="input" placeholder="e.g. Tower B, Flat 604"></div>
-          <div class="field"><label for="jdt">Date of your agreement</label><input id="jdt" class="input" type="date"></div>
-        </div>
-        <div class="field">
-          <label for="jdesc">What happened, in your words</label>
-          <textarea id="jdesc" class="input" placeholder="I booked Flat 604 in March 2023. Possession was promised in December 2025. The building is still incomplete and the promoter has not replied to my emails since April."></textarea>
-        </div>
-        <div class="field">
-          <label>What do you want the Authority to order?</label>
-          <div style="display:flex;gap:18px;flex-wrap:wrap;margin-top:6px">
-            <label class="radio"><input type="radio" name="jrelief"><span class="dot"></span>Interest for every month of delay</label>
-            <label class="radio"><input type="radio" name="jrelief"><span class="dot"></span>Refund of what I paid, with interest</label>
-            <label class="radio"><input type="radio" name="jrelief"><span class="dot"></span>Possession and registry of my unit</label>
-            <label class="radio"><input type="radio" name="jrelief"><span class="dot"></span>Compensation for loss</label>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span class="tag tag-neutral">{{ c.label }}</span>
+            <sc-if value="{{ c.canRemove }}"><button onClick="{{ c.remove }}" class="btn btn-ghost" style="font-size:12px">Remove</button></sc-if>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+            <div class="field"><label>Full name</label><input class="input" value="{{ c.fullName }}" onChange="{{ c.onFullName }}" placeholder="As on the booking agreement"></div>
+            <div class="field"><label>Relation</label>
+              <select class="input" value="{{ c.relationType }}" onChange="{{ c.onRelation }}" style="background:var(--color-bg)">
+                <sc-for list="{{ c.relationOptions }}" as="ro" hint-placeholder-count="4"><option value="{{ ro }}">{{ ro }}</option></sc-for>
+              </select>
+            </div>
+            <div class="field"><label>{{ c.relationType }}'s name</label><input class="input" value="{{ c.relativeName }}" onChange="{{ c.onRelativeName }}"></div>
+            <div class="field"><label>Age</label><input class="input" value="{{ c.age }}" onChange="{{ c.onAge }}" placeholder="Years"></div>
+            <div class="field"><label>Mobile number</label><input class="input" value="{{ c.mobileNumber }}" onChange="{{ c.onMobile }}" placeholder="10 digits"></div>
+            <div class="field"><label>Alternate number (optional)</label><input class="input" value="{{ c.altPhoneNumber }}" onChange="{{ c.onAltPhone }}"></div>
+            <div class="field"><label>Email</label><input class="input" type="email" value="{{ c.emailId }}" onChange="{{ c.onEmail }}"></div>
+            <div class="field"><label>Address line 1</label><input class="input" value="{{ c.addressLine1 }}" onChange="{{ c.onAddressLine1 }}"></div>
+            <div class="field"><label>District</label><input class="input" value="{{ c.district }}" onChange="{{ c.onDistrict }}"></div>
+            <div class="field"><label>Pincode</label><input class="input" value="{{ c.pincode }}" onChange="{{ c.onPincode }}"></div>
           </div>
         </div>
-      </div>
+      </sc-for>
+      <button onClick="{{ addComplainant }}" class="btn btn-secondary" style="margin-top:12px">+ Add a co-allottee</button>
+
+      <h5 style="margin-top:26px">Promoter, agent or contractor you are complaining against</h5>
+      <sc-for list="{{ respondents }}" as="r" hint-placeholder-count="2">
+        <div class="blueprint" style="padding:18px;margin-top:12px;display:grid;gap:14px">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span class="tag tag-neutral">{{ r.label }}</span>
+            <sc-if value="{{ r.canRemove }}"><button onClick="{{ r.remove }}" class="btn btn-ghost" style="font-size:12px">Remove</button></sc-if>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+            <div class="field"><label>Type</label>
+              <select class="input" value="{{ r.respondentType }}" onChange="{{ r.onType }}" style="background:var(--color-bg)">
+                <sc-for list="{{ r.typeOptions }}" as="to" hint-placeholder-count="4"><option value="{{ to }}">{{ to }}</option></sc-for>
+              </select>
+            </div>
+            <div class="field"><label>Firm or entity name</label><input class="input" value="{{ r.entityName }}" onChange="{{ r.onEntityName }}"></div>
+            <div class="field"><label>RERA registration number</label><input class="input" value="{{ r.reraRegistrationNumber }}" onChange="{{ r.onRera }}" placeholder="JHARERA/P/..."></div>
+            <div class="field"><label>Contact person</label><input class="input" value="{{ r.contactPerson }}" onChange="{{ r.onContact }}"></div>
+            <div class="field"><label>Mobile number</label><input class="input" value="{{ r.mobileNumber }}" onChange="{{ r.onMobile }}"></div>
+            <div class="field"><label>Email</label><input class="input" type="email" value="{{ r.emailId }}" onChange="{{ r.onEmail }}"></div>
+            <div class="field"><label>Office address</label><input class="input" value="{{ r.addressLine1 }}" onChange="{{ r.onAddressLine1 }}"></div>
+            <div class="field"><label>District</label><input class="input" value="{{ r.district }}" onChange="{{ r.onDistrict }}"></div>
+            <div class="field"><label>Pincode</label><input class="input" value="{{ r.pincode }}" onChange="{{ r.onPincode }}"></div>
+          </div>
+        </div>
+      </sc-for>
+      <button onClick="{{ addRespondent }}" class="btn btn-secondary" style="margin-top:12px">+ Add another respondent</button>
     </div>
     </sc-if>
 
     <sc-if value="{{ step3 }}">
     <div>
+      <h3>Tell us what happened</h3>
+      <p style="font-size:14px;color:var(--color-neutral-700);max-width:62ch">Write it the way you would explain it to a neighbour. Legal drafting is not required — the bench reads your own words.</p>
+      <div class="blueprint" style="padding:20px;margin-top:16px;display:grid;gap:16px">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div class="field"><label>Unit or flat number</label><input class="input" value="{{ cUnit }}" onChange="{{ onCUnit }}" placeholder="e.g. Flat 604"></div>
+          <div class="field"><label>Tower or block</label><input class="input" value="{{ cTower }}" onChange="{{ onCTower }}" placeholder="e.g. Tower B"></div>
+          <div class="field"><label>Carpet area (sq ft)</label><input class="input" value="{{ cCarpetArea }}" onChange="{{ onCCarpetArea }}" placeholder="e.g. 1250"></div>
+          <div class="field"><label>Total consideration value (₹)</label><input class="input" value="{{ cConsideration }}" onChange="{{ onCConsideration }}" placeholder="e.g. 4500000"></div>
+          <div class="field"><label>Total amount paid so far (₹)</label><input class="input" value="{{ cAmountPaid }}" onChange="{{ onCAmountPaid }}" placeholder="e.g. 3800000"></div>
+          <div class="field"><label>Date of your agreement</label><input class="input" value="{{ cAgreementDate }}" onChange="{{ onCAgreementDate }}" placeholder="DD/MM/YYYY"></div>
+          <div class="field"><label>Committed possession date</label><input class="input" value="{{ cPossessionDate }}" onChange="{{ onCPossessionDate }}" placeholder="DD/MM/YYYY"></div>
+        </div>
+        <div class="field">
+          <label for="jdesc">What happened, in your words ({{ factsCount }} characters, at least 50)</label>
+          <textarea id="jdesc" class="input" value="{{ cFacts }}" onChange="{{ onCFacts }}" placeholder="I booked Flat 604 in March 2023. Possession was promised in December 2025. The building is still incomplete and the promoter has not replied to my emails since April."></textarea>
+        </div>
+
+        <div class="field">
+          <label>What do you want the Authority to order?</label>
+          <sc-for list="{{ reliefs }}" as="rl" hint-placeholder-count="2">
+            <div class="blueprint" style="padding:14px;margin-top:8px;display:grid;gap:10px">
+              <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <span class="tag tag-neutral">{{ rl.label }}</span>
+                <sc-if value="{{ rl.canRemove }}"><button onClick="{{ rl.remove }}" class="btn btn-ghost" style="font-size:12px">Remove</button></sc-if>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+                <div class="field"><label>Relief sought</label>
+                  <select class="input" value="{{ rl.reliefType }}" onChange="{{ rl.onType }}" style="background:var(--color-bg)">
+                    <sc-for list="{{ rl.typeOptions }}" as="rto" hint-placeholder-count="6"><option value="{{ rto.key }}">{{ rto.label }}</option></sc-for>
+                  </select>
+                </div>
+                <div class="field"><label>Amount claimed (₹, optional)</label><input class="input" value="{{ rl.claimedAmount }}" onChange="{{ rl.onAmount }}" placeholder="e.g. 250000"></div>
+              </div>
+              <div class="field"><label>Describe this relief</label><input class="input" value="{{ rl.description }}" onChange="{{ rl.onDesc }}" placeholder="e.g. Interest at SBI MCLR + 2% from the committed date"></div>
+            </div>
+          </sc-for>
+          <button onClick="{{ addRelief }}" class="btn btn-secondary" style="margin-top:10px">+ Add another relief</button>
+        </div>
+
+        <div class="field">
+          <label class="checkbox"><input type="checkbox" onChange="{{ onInterimRequired }}"><span class="box"></span>I need an urgent interim order before the final hearing</label>
+          <sc-if value="{{ cInterimRequired }}">
+            <textarea class="input" style="margin-top:10px" value="{{ cInterimJustification }}" onChange="{{ onInterimJustification }}" placeholder="Why this cannot wait for the regular hearing"></textarea>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ step4 }}">
+    <div>
       <h3>Attach what you have</h3>
-      <p style="font-size:14px;color:var(--color-neutral-700);max-width:62ch">Only the first document is mandatory. Missing papers will not stop your filing — the bench can call for them later.</p>
+      <p style="font-size:14px;color:var(--color-neutral-700);max-width:62ch">Only the first two documents are mandatory. Missing papers will not stop your filing — the bench can call for them later.</p>
       <div style="display:flex;flex-direction:column;gap:12px;margin-top:16px">
-        <sc-for list="{{ uploads }}" as="u" hint-placeholder-count="4">
+        <sc-for list="{{ enclosures }}" as="u" hint-placeholder-count="6">
           <div class="blueprint" style="padding:16px 18px;display:flex;align-items:center;gap:18px">
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
             <div style="flex:1">
               <div style="font-family:var(--font-heading);font-weight:600;font-size:16px">{{ u.name }} <span class="tag {{ u.tagClass }}" style="margin-left:6px">{{ u.need }}</span></div>
               <div style="font-size:12px;color:var(--color-neutral-600)">{{ u.hint }}</div>
             </div>
-            <button class="btn btn-secondary" style="flex:none">Choose file</button>
+            <button onClick="{{ u.toggle }}" class="btn btn-secondary" style="flex:none">{{ u.btnLabel }}</button>
           </div>
         </sc-for>
       </div>
@@ -618,12 +705,45 @@
     </div>
     </sc-if>
 
-    <sc-if value="{{ step4 }}">
+    <sc-if value="{{ step5 }}">
     <div>
-      <h3>Check and pay</h3>
-      <table class="table" style="margin-top:12px">
+      <h3>Declare, check and pay</h3>
+
+      <div class="blueprint" style="padding:20px;margin-top:12px;display:grid;gap:12px">
+        <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <label class="checkbox"><input type="checkbox" onChange="{{ onJurisdictionAffirmed }}"><span class="box"></span>I affirm this matter falls within JHARERA's jurisdiction</label>
+        <label class="checkbox"><input type="checkbox" onChange="{{ onNoPendingCourt }}"><span class="box"></span>This matter is not pending before any other court or tribunal</label>
+        <div class="field" style="margin-top:6px"><label>Details of any earlier litigation on this matter (optional)</label><input class="input" value="{{ cPriorLitigation }}" onChange="{{ onCPriorLitigation }}"></div>
+      </div>
+
+      <div class="blueprint" style="padding:20px;margin-top:14px;display:grid;gap:12px">
+        <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <div class="field"><label>Verified by</label><input class="input" value="{{ cVerifiedByName }}" onChange="{{ onCVerifiedByName }}"></div>
+        <label class="checkbox"><input type="checkbox" onChange="{{ onAgreed }}"><span class="box"></span>I agree that the information given above is true to the best of my knowledge</label>
+        <p style="font-size:12px;color:var(--color-neutral-600)">Your submission time and IP address are recorded automatically when you submit.</p>
+      </div>
+
+      <div class="field" style="margin-top:14px">
+        <label>How would you like to pay the filing fee?</label>
+        <div style="display:flex;gap:12px;margin-top:6px">
+          <sc-for list="{{ paymentModes }}" as="pm" hint-placeholder-count="2">
+            <button onClick="{{ pm.pick }}" class="btn {{ pm.btnClass }}">{{ pm.label }}</button>
+          </sc-for>
+        </div>
+      </div>
+      <sc-if value="{{ isDD }}">
+        <div class="blueprint" style="padding:18px;margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+          <div class="field"><label>Draft number</label><input class="input" value="{{ cDDNumber }}" onChange="{{ onCDDNumber }}"></div>
+          <div class="field"><label>Bank name</label><input class="input" value="{{ cDDBank }}" onChange="{{ onCDDBank }}"></div>
+          <div class="field"><label>Branch name</label><input class="input" value="{{ cDDBranch }}" onChange="{{ onCDDBranch }}"></div>
+          <div class="field"><label>Issue date</label><input class="input" value="{{ cDDDate }}" onChange="{{ onCDDDate }}" placeholder="DD/MM/YYYY"></div>
+        </div>
+      </sc-if>
+
+      <table class="table" style="margin-top:22px">
         <tbody>
-          <sc-for list="{{ review }}" as="r" hint-placeholder-count="6">
+          <sc-for list="{{ review }}" as="r" hint-placeholder-count="8">
             <tr>
               <td style="width:38%;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--color-neutral-600)">{{ r.k }}</td>
               <td>{{ r.v }}</td>
@@ -638,7 +758,7 @@
           <div style="font-family:var(--font-heading);font-size:20px">Filing fee ₹1,000</div>
           <div style="font-size:12px;color:var(--color-neutral-600)">Prescribed under Rule 36. Paid once. Refunded if the complaint is returned for want of jurisdiction.</div>
         </div>
-        <button onClick="{{ submitComplaint }}" class="btn btn-primary" style="height:44px;padding:0 22px;font-size:15px;flex:none">Pay and submit</button>
+        <button onClick="{{ submitComplaint }}" class="btn btn-primary" style="height:44px;padding:0 22px;font-size:15px;flex:none">{{ submitLabel }}</button>
       </div>
     </div>
     </sc-if>
@@ -1264,6 +1384,49 @@ const ROUTE_PATHS = {
   track: '/complaints/track', promoter: '/promoter', login: '/sign-in',
   dash: '/dashboard', orders: '/orders', acts: '/acts-rules', officer: '/officer'
 };
+
+const ISSUE_CATEGORIES = [
+  { key: 'DELAYED_POSSESSION', title: 'Possession is late', note: 'The date in my agreement has passed' },
+  { key: 'REFUND_WITH_INTEREST', title: 'I want my money back', note: 'I no longer want the unit and the promoter will not refund' },
+  { key: 'STRUCTURAL_DEFECTS', title: 'Structural defects', note: 'Cracks, leaks or other defects within the promoter’s liability period' },
+  { key: 'SANCTION_PLAN_DEVIATION', title: 'The project changed', note: 'Layout, area or amenities differ from the sanctioned plan' },
+  { key: 'FALSE_ADVERTISEMENT', title: 'Misleading advertisement', note: 'What is being built differs from what was advertised' },
+  { key: 'FAILURE_TO_EXECUTE_AGREEMENT', title: 'Agreement not executed', note: 'The promoter has not signed my agreement for sale' },
+  { key: 'NON_FORMATION_OF_SOCIETY', title: 'Society not formed', note: 'The promoter has not formed the allottees’ association' },
+  { key: 'OTHER', title: 'Something else', note: 'Any other matter under the Act or Rules, including an unregistered project' }
+];
+const RELATION_TYPES = ['Father', 'Spouse', 'Mother', 'Guardian'];
+const RESPONDENT_TYPES = ['Promoter/Builder', 'Real Estate Agent', 'Contractor', 'Other'];
+const RELIEF_TYPES = [
+  { key: 'HANDOVER_OF_POSSESSION', label: 'Handover of possession' },
+  { key: 'REFUND_UNDER_SECTION_18', label: 'Refund under Section 18' },
+  { key: 'INTEREST_ON_DELAY', label: 'Interest on delay' },
+  { key: 'STRUCTURAL_RECTIFICATION', label: 'Structural rectification' },
+  { key: 'COMPENSATION_FOR_DAMAGES', label: 'Compensation for damages' },
+  { key: 'OTHER', label: 'Other relief' }
+];
+const PAYMENT_MODES = [
+  { key: 'ONLINE_GATEWAY', label: 'Pay online' },
+  { key: 'DEMAND_DRAFT', label: 'Demand draft' }
+];
+const BLANK_COMPLAINANT = {
+  isPrimary: false, fullName: '', relationType: 'Spouse', relativeName: '', age: '',
+  mobileNumber: '', altPhoneNumber: '', emailId: '',
+  addressLine1: '', district: '', pincode: '', serviceSame: true
+};
+const BLANK_RESPONDENT = {
+  respondentType: 'Promoter/Builder', reraRegistrationNumber: '', entityName: '',
+  contactPerson: '', emailId: '', mobileNumber: '', addressLine1: '', district: '', pincode: ''
+};
+const BLANK_RELIEF = { reliefType: 'INTEREST_ON_DELAY', claimedAmount: '', description: '' };
+const ENCLOSURE_TYPES = [
+  { key: 'ALLOTMENT_LETTER', name: 'Allotment letter', hint: 'The paper that shows you booked a unit and on what terms' },
+  { key: 'AGREEMENT_FOR_SALE', name: 'Agreement for sale', hint: 'The registered or unregistered agreement with the promoter' },
+  { key: 'PAYMENT_RECEIPTS', name: 'Payment receipts', hint: 'Bank statements are accepted where receipts were never given' },
+  { key: 'LEGAL_NOTICE', name: 'Legal notice sent to promoter', hint: 'Shows you asked before coming here' },
+  { key: 'INTERIM_APPLICATION', name: 'Interim application', hint: 'Only if you are asking for an urgent interim order' },
+  { key: 'OTHER_EVIDENCE', name: 'Other evidence', hint: 'Brochure, advertisement or anything else relevant' }
+];
 function stateForLocation() {
   if (typeof window === 'undefined') return { route: 'home' };
   const hash = window.location.hash;
@@ -1283,7 +1446,18 @@ class Component extends DCLogic {
   state = {
     route: 'home', lang: 'en', dark: false, scale: 1, simple: true, theme: 'Sal forest',
     q: '', district: 'All districts', status: 'Any status', ptype: 'All types', projId: 'p1',
-    cStep: 1, cGround: 'delay', cProject: 'Bokaro Sunrise Apartments',
+    cStep: 1, cProject: 'Bokaro Sunrise Apartments',
+    cIssueCategories: ['DELAYED_POSSESSION'],
+    cComplainants: [{ ...BLANK_COMPLAINANT, isPrimary: true }],
+    cRespondents: [{ ...BLANK_RESPONDENT }],
+    cUnit: '', cTower: '', cCarpetArea: '', cConsideration: '', cAmountPaid: '',
+    cAgreementDate: '', cPossessionDate: '', cFacts: '',
+    cReliefs: [{ ...BLANK_RELIEF }],
+    cInterimRequired: false, cInterimJustification: '',
+    cEnclosuresAttached: {},
+    cJurisdictionAffirmed: false, cNoPendingCourt: false, cPriorLitigation: '',
+    cVerifiedByName: '', cAgreed: false,
+    cPaymentMode: 'ONLINE_GATEWAY', cDDNumber: '', cDDBank: '', cDDBranch: '', cDDDate: '',
     caseQ: 'JH/CMP/2026/00418', tracked: true, agentQ: '', orderQ: '', role: 'citizen'
   };
   componentDidMount() {
@@ -1316,6 +1490,30 @@ class Component extends DCLogic {
   };
   go = (route) => () => this.navigate(route);
   openProj = (id) => () => this.navigate('project', id);
+
+  toggleIssueCategory = (key) => this.setState(st => ({
+    cIssueCategories: st.cIssueCategories.includes(key)
+      ? st.cIssueCategories.filter(k => k !== key)
+      : [...st.cIssueCategories, key]
+  }));
+  updateComplainant = (i, key, value) => this.setState(st => ({
+    cComplainants: st.cComplainants.map((c, idx) => idx === i ? { ...c, [key]: value } : c)
+  }));
+  addComplainant = () => this.setState(st => ({ cComplainants: [...st.cComplainants, { ...BLANK_COMPLAINANT }] }));
+  removeComplainant = (i) => this.setState(st => ({ cComplainants: st.cComplainants.filter((_, idx) => idx !== i) }));
+  updateRespondent = (i, key, value) => this.setState(st => ({
+    cRespondents: st.cRespondents.map((r, idx) => idx === i ? { ...r, [key]: value } : r)
+  }));
+  addRespondent = () => this.setState(st => ({ cRespondents: [...st.cRespondents, { ...BLANK_RESPONDENT }] }));
+  removeRespondent = (i) => this.setState(st => ({ cRespondents: st.cRespondents.filter((_, idx) => idx !== i) }));
+  updateRelief = (i, key, value) => this.setState(st => ({
+    cReliefs: st.cReliefs.map((r, idx) => idx === i ? { ...r, [key]: value } : r)
+  }));
+  addRelief = () => this.setState(st => ({ cReliefs: [...st.cReliefs, { ...BLANK_RELIEF }] }));
+  removeRelief = (i) => this.setState(st => ({ cReliefs: st.cReliefs.filter((_, idx) => idx !== i) }));
+  toggleEnclosure = (key) => this.setState(st => ({
+    cEnclosuresAttached: { ...st.cEnclosuresAttached, [key]: !st.cEnclosuresAttached[key] }
+  }));
 
   tag(status) {
     if (status === 'Registered') return 'tag-accent';
@@ -1441,57 +1639,141 @@ class Component extends DCLogic {
       isOrders: s.route === 'orders', isActs: s.route === 'acts', isOfficer: s.route === 'officer',
 
       steps: [
-        { n: '1', label: 'Right place?' }, { n: '2', label: 'What happened' },
-        { n: '3', label: 'Documents' }, { n: '4', label: 'Review and pay' }
+        { n: '1', label: 'Right place?' }, { n: '2', label: 'Parties' },
+        { n: '3', label: 'What happened' }, { n: '4', label: 'Documents' }, { n: '5', label: 'Declare and pay' }
       ].map((st, i) => {
         const n = i + 1, done = s.cStep > n, on = s.cStep === n;
         return Object.assign({}, st, { style: {
-          flex: 1, padding: '11px 14px', borderRight: i < 3 ? '1px solid var(--color-divider)' : 0,
+          flex: 1, padding: '11px 14px', borderRight: i < 4 ? '1px solid var(--color-divider)' : 0,
           background: on ? 'var(--color-accent)' : 'transparent',
           color: on ? '#f2f2f3' : (done ? 'var(--color-text)' : 'var(--color-neutral-600)')
         } });
       }),
-      step1: s.cStep === 1, step2: s.cStep === 2, step3: s.cStep === 3, step4: s.cStep === 4, stepDone: s.cStep === 5,
-      nextLabel: s.cStep === 3 ? 'Review my complaint' : 'Continue',
-      wizardNavStyle: { display: s.cStep >= 4 ? 'none' : 'flex', gap: '12px', alignItems: 'center', marginTop: '24px' },
-      nextStep: () => this.setState(st => ({ cStep: Math.min(4, st.cStep + 1) })),
+      step1: s.cStep === 1, step2: s.cStep === 2, step3: s.cStep === 3, step4: s.cStep === 4, step5: s.cStep === 5, stepDone: s.cStep === 6,
+      nextLabel: s.cStep === 4 ? 'Review, declare and pay' : 'Continue',
+      wizardNavStyle: { display: s.cStep >= 5 ? 'none' : 'flex', gap: '12px', alignItems: 'center', marginTop: '24px' },
+      nextStep: () => this.setState(st => ({ cStep: Math.min(5, st.cStep + 1) })),
       prevStep: () => this.setState(st => ({ cStep: Math.max(1, st.cStep - 1) })),
-      submitComplaint: () => this.setState({ cStep: 5 }),
-      grounds: [
-        { key: 'delay', title: 'Possession is late', note: 'The date in my agreement has passed' },
-        { key: 'refund', title: 'I want my money back', note: 'I no longer want the unit and the promoter will not refund' },
-        { key: 'changed', title: 'The project changed', note: 'Layout, area or amenities are not what was promised' },
-        { key: 'charges', title: 'Extra charges demanded', note: 'Amounts not in my agreement are being asked for' },
-        { key: 'unreg', title: 'The project is not registered', note: 'It is being sold without a registration number' }
-      ].map(g => ({
-        title: g.title, note: g.note, pick: () => this.setState({ cGround: g.key }),
-        style: { display: 'flex', gap: '11px', alignItems: 'flex-start', textAlign: 'left', width: '100%', cursor: 'pointer', font: 'inherit', color: 'inherit', padding: '11px 13px', background: s.cGround === g.key ? 'var(--color-accent-100)' : 'transparent', border: '1px solid ' + (s.cGround === g.key ? 'var(--color-accent)' : 'var(--color-divider)') },
-        dotStyle: { width: '14px', height: '14px', borderRadius: '50%', flex: 'none', marginTop: '4px', border: '1.5px solid ' + (s.cGround === g.key ? 'var(--color-accent)' : 'var(--color-divider)'), background: s.cGround === g.key ? 'var(--color-accent)' : 'transparent', boxShadow: s.cGround === g.key ? 'inset 0 0 0 3px var(--color-bg)' : 'none' }
+      submitComplaint: () => this.setState({ cStep: 6 }),
+      submitLabel: s.cPaymentMode === 'DEMAND_DRAFT' ? 'Submit with demand draft details' : 'Pay and submit',
+
+      issueCats: ISSUE_CATEGORIES.map(g => ({
+        title: g.title, note: g.note, pick: () => this.toggleIssueCategory(g.key),
+        style: { display: 'flex', gap: '11px', alignItems: 'flex-start', textAlign: 'left', width: '100%', cursor: 'pointer', font: 'inherit', color: 'inherit', padding: '11px 13px', background: s.cIssueCategories.includes(g.key) ? 'var(--color-accent-100)' : 'transparent', border: '1px solid ' + (s.cIssueCategories.includes(g.key) ? 'var(--color-accent)' : 'var(--color-divider)') },
+        dotStyle: { width: '14px', height: '14px', borderRadius: '4px', flex: 'none', marginTop: '4px', border: '1.5px solid ' + (s.cIssueCategories.includes(g.key) ? 'var(--color-accent)' : 'var(--color-divider)'), background: s.cIssueCategories.includes(g.key) ? 'var(--color-accent)' : 'transparent', boxShadow: s.cIssueCategories.includes(g.key) ? 'inset 0 0 0 3px var(--color-bg)' : 'none' }
       })),
       cProject: s.cProject, onCProject: (e) => this.setState({ cProject: e.target.value }),
       projectMatchNote: (() => {
         const m = PROJECTS.find(p => p.name.toLowerCase().includes(s.cProject.trim().toLowerCase()) && s.cProject.trim());
         return m ? 'Matched ' + m.name + ' — ' + m.reg + ' (' + m.status + ')' : 'No registered project matches that name yet. You can still file — say so in the next step.';
       })(),
-      eligTitle: s.cGround === 'unreg' ? 'File this as a complaint against an unregistered project' : 'Yes — the Authority can decide this',
-      eligNote: s.cGround === 'unreg'
-        ? 'Selling an unregistered project is an offence under Section 3. The Authority will act on your information and may impose a penalty of up to ten percent of the project cost.'
-        : 'Your problem falls under Section ' + (s.cGround === 'delay' ? '18' : s.cGround === 'changed' ? '14' : s.cGround === 'refund' ? '18' : '11') + ' of the Act. The filing fee is ₹1,000 and a lawyer is not required.',
+      eligTitle: s.cIssueCategories.length ? 'Yes — the Authority can decide this' : 'Choose at least one issue above',
+      eligNote: s.cIssueCategories.length
+        ? 'Based on what you picked, this falls within the Authority\'s jurisdiction under the Real Estate (Regulation and Development) Act. The filing fee is ₹1,000 and a lawyer is not required.'
+        : 'Pick what went wrong so we can tell you whether the Authority can decide it.',
       eligStyle: { padding: '16px 18px', marginTop: '16px', background: 'var(--color-accent-100)', borderColor: 'var(--color-accent)' },
-      uploads: [
-        { name: 'Booking agreement or allotment letter', need: 'Required', tagClass: 'tag-outline', hint: 'The paper that shows you booked a unit and on what terms' },
-        { name: 'Payment receipts', need: 'Recommended', tagClass: 'tag-neutral', hint: 'Bank statements are accepted where receipts were never given' },
-        { name: 'Letters or emails to the promoter', need: 'Optional', tagClass: 'tag-neutral', hint: 'Shows you asked before coming here' },
-        { name: 'Brochure or advertisement', need: 'Optional', tagClass: 'tag-neutral', hint: 'Needed only if what was promised differs from what is being built' }
-      ],
-      review: [
-        { k: 'Complaint about', v: 'Possession is late', edit: () => this.setState({ cStep: 1 }) },
-        { k: 'Project', v: s.cProject + ' — JHARERA/P/BOK/2021/000164', edit: () => this.setState({ cStep: 1 }) },
-        { k: 'Promoter', v: 'Ambey Constructions', edit: () => this.setState({ cStep: 1 }) },
-        { k: 'Relief sought', v: 'Interest for every month of delay', edit: () => this.setState({ cStep: 2 }) },
-        { k: 'Documents attached', v: 'Booking agreement, 11 payment receipts', edit: () => this.setState({ cStep: 3 }) },
-        { k: 'Hearing bench', v: 'Bench II, Ranchi (assigned by district)', edit: () => this.setState({ cStep: 1 }) }
-      ],
+
+      complainants: s.cComplainants.map((c, i) => Object.assign({}, c, {
+        label: i === 0 ? 'Primary complainant' : 'Co-allottee ' + (i + 1),
+        canRemove: i > 0, remove: () => this.removeComplainant(i),
+        relationOptions: RELATION_TYPES,
+        onFullName: (e) => this.updateComplainant(i, 'fullName', e.target.value),
+        onRelation: (e) => this.updateComplainant(i, 'relationType', e.target.value),
+        onRelativeName: (e) => this.updateComplainant(i, 'relativeName', e.target.value),
+        onAge: (e) => this.updateComplainant(i, 'age', e.target.value),
+        onMobile: (e) => this.updateComplainant(i, 'mobileNumber', e.target.value),
+        onAltPhone: (e) => this.updateComplainant(i, 'altPhoneNumber', e.target.value),
+        onEmail: (e) => this.updateComplainant(i, 'emailId', e.target.value),
+        onAddressLine1: (e) => this.updateComplainant(i, 'addressLine1', e.target.value),
+        onDistrict: (e) => this.updateComplainant(i, 'district', e.target.value),
+        onPincode: (e) => this.updateComplainant(i, 'pincode', e.target.value)
+      })),
+      addComplainant: this.addComplainant,
+      respondents: s.cRespondents.map((r, i) => Object.assign({}, r, {
+        label: i === 0 ? 'Respondent 1' : 'Respondent ' + (i + 1),
+        canRemove: i > 0, remove: () => this.removeRespondent(i),
+        typeOptions: RESPONDENT_TYPES,
+        onType: (e) => this.updateRespondent(i, 'respondentType', e.target.value),
+        onEntityName: (e) => this.updateRespondent(i, 'entityName', e.target.value),
+        onRera: (e) => this.updateRespondent(i, 'reraRegistrationNumber', e.target.value),
+        onContact: (e) => this.updateRespondent(i, 'contactPerson', e.target.value),
+        onMobile: (e) => this.updateRespondent(i, 'mobileNumber', e.target.value),
+        onEmail: (e) => this.updateRespondent(i, 'emailId', e.target.value),
+        onAddressLine1: (e) => this.updateRespondent(i, 'addressLine1', e.target.value),
+        onDistrict: (e) => this.updateRespondent(i, 'district', e.target.value),
+        onPincode: (e) => this.updateRespondent(i, 'pincode', e.target.value)
+      })),
+      addRespondent: this.addRespondent,
+
+      cUnit: s.cUnit, onCUnit: (e) => this.setState({ cUnit: e.target.value }),
+      cTower: s.cTower, onCTower: (e) => this.setState({ cTower: e.target.value }),
+      cCarpetArea: s.cCarpetArea, onCCarpetArea: (e) => this.setState({ cCarpetArea: e.target.value }),
+      cConsideration: s.cConsideration, onCConsideration: (e) => this.setState({ cConsideration: e.target.value }),
+      cAmountPaid: s.cAmountPaid, onCAmountPaid: (e) => this.setState({ cAmountPaid: e.target.value }),
+      cAgreementDate: s.cAgreementDate, onCAgreementDate: (e) => this.setState({ cAgreementDate: e.target.value }),
+      cPossessionDate: s.cPossessionDate, onCPossessionDate: (e) => this.setState({ cPossessionDate: e.target.value }),
+      cFacts: s.cFacts, onCFacts: (e) => this.setState({ cFacts: e.target.value }),
+      factsCount: s.cFacts.length,
+      reliefs: s.cReliefs.map((rl, i) => Object.assign({}, rl, {
+        label: 'Relief ' + (i + 1), canRemove: s.cReliefs.length > 1, remove: () => this.removeRelief(i),
+        typeOptions: RELIEF_TYPES,
+        onType: (e) => this.updateRelief(i, 'reliefType', e.target.value),
+        onAmount: (e) => this.updateRelief(i, 'claimedAmount', e.target.value),
+        onDesc: (e) => this.updateRelief(i, 'description', e.target.value)
+      })),
+      addRelief: this.addRelief,
+      cInterimRequired: s.cInterimRequired,
+      onInterimRequired: () => this.setState(st => ({ cInterimRequired: !st.cInterimRequired })),
+      cInterimJustification: s.cInterimJustification,
+      onInterimJustification: (e) => this.setState({ cInterimJustification: e.target.value }),
+
+      enclosures: ENCLOSURE_TYPES.map(e => {
+        const need = e.key === 'INTERIM_APPLICATION' ? (s.cInterimRequired ? 'Required' : 'Not needed')
+          : (e.key === 'ALLOTMENT_LETTER' || e.key === 'AGREEMENT_FOR_SALE') ? 'Required'
+          : e.key === 'PAYMENT_RECEIPTS' ? 'Recommended' : 'Optional';
+        const attached = !!s.cEnclosuresAttached[e.key];
+        return Object.assign({}, e, {
+          need, tagClass: need === 'Required' ? 'tag-outline' : 'tag-neutral',
+          attached, btnLabel: attached ? 'Attached ✓' : 'Choose file',
+          toggle: () => this.toggleEnclosure(e.key)
+        });
+      }),
+
+      cJurisdictionAffirmed: s.cJurisdictionAffirmed,
+      onJurisdictionAffirmed: () => this.setState(st => ({ cJurisdictionAffirmed: !st.cJurisdictionAffirmed })),
+      cNoPendingCourt: s.cNoPendingCourt,
+      onNoPendingCourt: () => this.setState(st => ({ cNoPendingCourt: !st.cNoPendingCourt })),
+      cPriorLitigation: s.cPriorLitigation, onCPriorLitigation: (e) => this.setState({ cPriorLitigation: e.target.value }),
+      cVerifiedByName: s.cVerifiedByName || (s.cComplainants[0] && s.cComplainants[0].fullName) || '',
+      onCVerifiedByName: (e) => this.setState({ cVerifiedByName: e.target.value }),
+      cAgreed: s.cAgreed, onAgreed: () => this.setState(st => ({ cAgreed: !st.cAgreed })),
+
+      paymentModes: PAYMENT_MODES.map(pm => ({
+        label: pm.label, pick: () => this.setState({ cPaymentMode: pm.key }),
+        btnClass: s.cPaymentMode === pm.key ? 'btn-primary' : 'btn-secondary'
+      })),
+      isDD: s.cPaymentMode === 'DEMAND_DRAFT',
+      cDDNumber: s.cDDNumber, onCDDNumber: (e) => this.setState({ cDDNumber: e.target.value }),
+      cDDBank: s.cDDBank, onCDDBank: (e) => this.setState({ cDDBank: e.target.value }),
+      cDDBranch: s.cDDBranch, onCDDBranch: (e) => this.setState({ cDDBranch: e.target.value }),
+      cDDDate: s.cDDDate, onCDDDate: (e) => this.setState({ cDDDate: e.target.value }),
+
+      review: (() => {
+        const catLabels = s.cIssueCategories.map(k => (ISSUE_CATEGORIES.find(c => c.key === k) || {}).title).filter(Boolean);
+        const complainantNames = s.cComplainants.map(c => c.fullName).filter(Boolean);
+        const respondentNames = s.cRespondents.map(r => r.entityName).filter(Boolean);
+        const reliefLabels = s.cReliefs.map(rl => (RELIEF_TYPES.find(t => t.key === rl.reliefType) || {}).label).filter(Boolean);
+        const attachedCount = Object.values(s.cEnclosuresAttached).filter(Boolean).length;
+        return [
+          { k: 'Complaint about', v: catLabels.length ? catLabels.join(', ') : 'Not yet chosen', edit: () => this.setState({ cStep: 1 }) },
+          { k: 'Project', v: s.cProject || 'Not yet entered', edit: () => this.setState({ cStep: 1 }) },
+          { k: 'Complainant(s)', v: complainantNames.length ? complainantNames.join(', ') : 'Not yet entered', edit: () => this.setState({ cStep: 2 }) },
+          { k: 'Respondent(s)', v: respondentNames.length ? respondentNames.join(', ') : 'Not yet entered', edit: () => this.setState({ cStep: 2 }) },
+          { k: 'Relief sought', v: reliefLabels.length ? reliefLabels.join(', ') : 'Not yet chosen', edit: () => this.setState({ cStep: 3 }) },
+          { k: 'Documents attached', v: attachedCount + ' of ' + ENCLOSURE_TYPES.length, edit: () => this.setState({ cStep: 4 }) },
+          { k: 'Payment mode', v: (PAYMENT_MODES.find(p => p.key === s.cPaymentMode) || {}).label, edit: () => this.setState({ cStep: 5 }) }
+        ];
+      })(),
 
       caseQ: s.caseQ, onCaseQ: (e) => this.setState({ caseQ: e.target.value }),
       doTrack: () => this.setState({ tracked: true }), tracked: s.tracked,
