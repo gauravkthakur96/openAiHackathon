@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Interactive mock portal for the Jharkhand Real Estate Regulatory Authority.">
+<title>JharERA Portal — Mock</title>
+<script src="./vendor/react.production.min.js"></script>
+<script src="./vendor/react-dom.production.min.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/industry-5df306a8-d207-48fe-8fdf-2d6a5f1448c6/styles.css">
+<script src="_ds/industry-5df306a8-d207-48fe-8fdf-2d6a5f1448c6/_ds_bundle.js"></script>
+<style>
+  html, body { margin: 0; }
+  .jl { color: inherit; text-decoration: none; }
+  .jl:hover { color: var(--color-accent); }
+  @keyframes jFade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  @keyframes jhHeritageReveal { from { opacity: .01; transform: translateY(30px) scale(.975); filter: saturate(.72); } to { opacity: 1; transform: translateY(0) scale(1); filter: saturate(1); } }
+  @keyframes jhForestDrift { from { background-position: 50% 50%; } to { background-position: 50% 46%; } }
+  .jh-home-hero { position:relative; margin:0 -24px; border-bottom:4px solid var(--color-accent); }
+  .jh-hero-frame { position:relative; overflow:hidden; line-height:0; }
+  .jh-hero-img { display:block; width:100%; height:auto; animation:jhHeritageReveal 1.1s ease both, jhForestDrift 24s ease-in-out infinite alternate; animation-timeline:view(),auto; animation-range:entry 4% cover 30%; }
+  .jh-hero-overlay { position:static; padding:28px 24px 8px; line-height:normal; }
+  .jh-hero-copy { max-width:640px; padding:0; }
+  .jh-hero-eyebrow { display:inline-flex; align-items:center; gap:8px; font-family:var(--font-heading); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--color-accent-800); margin-bottom:14px; }
+  .jh-hero-eyebrow .rule { width:26px; height:1px; background:var(--color-accent); }
+  .jh-hero-copy h1 { font-size:clamp(30px,4.5vw,52px); line-height:1.05; max-width:14ch; margin-bottom:14px; color:var(--color-text); text-wrap:balance; }
+  .jh-hero-copy p.lede { font-size:16px; max-width:44ch; color:var(--color-neutral-700); margin-bottom:0; }
+  .jh-hero-search { margin-top:22px; padding:18px; max-width:480px; background:var(--color-bg); box-shadow:var(--shadow-md); }
+  .jh-hero-updated { font-size:12px; color:var(--color-neutral-600); margin-top:14px; margin-bottom:0; }
+  .jh-hero-bottom { display:grid; grid-template-columns:1fr; gap:18px; padding:18px 24px; background:var(--color-accent-900); color:#fff; }
+  .jh-hero-bottom .jh-links-col { display:flex; flex-direction:column; gap:10px; }
+  .jh-stat { padding-left:18px; border-left:1px solid rgba(255,255,255,.18); }
+  .jh-stat:first-child { padding-left:0; border-left:0; }
+  .jh-quick-link { display:flex; align-items:center; justify-content:space-between; gap:8px; background:transparent; border:1px solid rgba(255,255,255,.28); padding:9px 11px; color:#fff; cursor:pointer; text-align:left; font:inherit; font-size:12px; }
+  .jh-quick-link:hover { background:rgba(255,255,255,.13); }
+  .jh-built-photo { height:220px; background-image:url('./assets/heritage/jharkhand-built-environment-triptych.png'); background-size:300% 100%; border-bottom:3px solid var(--color-accent); }
+  .jh-built-photo.ranchi { background-position:left center; } .jh-built-photo.jamshedpur { background-position:center center; } .jh-built-photo.homes { background-position:right center; }
+  @media (prefers-reduced-motion: reduce) { .jh-hero-img { animation:none; } }
+  /* Below this, the copy block flows under the uncropped artwork; at and above it the
+     hero is wide enough (image height plateaus at ~560px, capped by main's 1180px) for
+     the copy to safely overlay the artwork's cream sky without reaching its painted border. */
+  @media (min-width: 1200px) {
+    .jh-hero-overlay { position:absolute; inset:0 0 22% 0; display:flex; align-items:center; padding:0; }
+    .jh-hero-copy { max-width:min(54%,620px); padding:0 0 0 clamp(24px,4vw,52px); }
+    .jh-hero-eyebrow { color:#2f4a2a; }
+    .jh-hero-copy h1 { color:#16240f; }
+    .jh-hero-copy p.lede { color:#3a4634; }
+    .jh-hero-search { margin-top:24px; padding:18px; background:rgba(252,250,240,.9); backdrop-filter:blur(10px); box-shadow:0 18px 42px rgba(20,32,14,.22); }
+    .jh-hero-updated { color:#4d5943; }
+    .jh-hero-bottom { grid-template-columns:1.05fr .95fr; gap:26px; padding:18px 32px; }
+    .jh-hero-bottom .jh-links-col { justify-content:center; }
+  }
+</style>
+</helmet>
+
+<div style="{{ rootStyle }}" data-screen-label="JharERA">
+
+<a href="#jmain" style="position:absolute;left:-9999px;top:0;background:var(--color-accent);color:#fff;padding:8px 14px;z-index:99;font-family:var(--font-heading)" style-focus="left:8px">Skip to main content</a>
+
+<div style="background:linear-gradient(90deg,var(--color-accent-900) 0%,var(--color-accent-900) 72%,var(--color-jh-blue,var(--color-accent-800)) 100%);border-top:4px solid var(--color-accent);color:#eef6ff;font-size:12px">
+  <div style="max-width:1180px;margin:0 auto;padding:6px 24px;display:flex;align-items:center;gap:18px;flex-wrap:wrap">
+    <span style="letter-spacing:.06em;text-transform:uppercase;font-family:var(--font-heading);font-size:11px">Government of Jharkhand</span>
+    <span style="opacity:.5">|</span>
+    <a class="jl" href="#jmain" style="color:#eef6ff;font-size:12px">Skip to content</a>
+    <a class="jl" href="#jmain" style="color:#eef6ff;font-size:12px">Screen reader access</a>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:10px">
+      <div style="display:flex;align-items:center;gap:4px" role="group" aria-label="Text size">
+        <button onClick="{{ fontDown }}" aria-label="Decrease text size" style="background:none;border:1px solid rgba(238,246,255,.35);color:#eef6ff;width:24px;height:22px;cursor:pointer;font-size:11px">A-</button>
+        <button onClick="{{ fontReset }}" aria-label="Normal text size" style="background:none;border:1px solid rgba(238,246,255,.35);color:#eef6ff;width:24px;height:22px;cursor:pointer;font-size:12px">A</button>
+        <button onClick="{{ fontUp }}" aria-label="Increase text size" style="background:none;border:1px solid rgba(238,246,255,.35);color:#eef6ff;width:24px;height:22px;cursor:pointer;font-size:13px">A+</button>
+      </div>
+      <button onClick="{{ toggleDark }}" aria-label="Toggle high contrast dark mode" style="background:none;border:1px solid rgba(238,246,255,.35);color:#eef6ff;padding:2px 9px;height:22px;cursor:pointer;font-size:11px;font-family:var(--font-heading);letter-spacing:.04em">CONTRAST</button>
+      <button onClick="{{ toggleSimple }}" style="{{ simpleBtnStyle }}" title="Rewrites legal terms in plain words">PLAIN LANGUAGE</button>
+      <div style="display:flex;align-items:center;gap:5px" role="group" aria-label="Accent theme">
+        <sc-for list="{{ themeOptions }}" as="t" hint-placeholder-count="3">
+          <button onClick="{{ t.pick }}" style="{{ t.style }}" title="{{ t.name }}" aria-label="{{ t.name }}"></button>
+        </sc-for>
+      </div>
+      <div style="display:flex;border:1px solid rgba(238,246,255,.35)">
+        <button onClick="{{ setEn }}" style="{{ enBtnStyle }}">English</button>
+        <button onClick="{{ setHi }}" style="{{ hiBtnStyle }}">हिन्दी</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<header style="border-bottom:1px solid var(--color-divider);background:var(--color-bg)">
+  <div style="max-width:1180px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:16px">
+    <div style="width:58px;height:60px;overflow:hidden;flex:none;display:flex;align-items:center" aria-hidden="true">
+      <img src="./assets/official/jharera-logo.png" alt="" style="height:60px;width:auto;max-width:none;display:block">
+    </div>
+    <div style="flex:1;min-width:0;margin-right:auto">
+      <div style="font-family:var(--font-heading);font-weight:600;font-size:26px;line-height:1.05;letter-spacing:-.01em">
+        <span style="{{ sEn }}">Jharkhand Real Estate Regulatory Authority</span><span style="{{ sHi }}">झारखंड भू-संपदा नियामक प्राधिकरण</span>
+      </div>
+      <div style="font-size:12px;color:var(--color-neutral-600);letter-spacing:.02em">
+        <span style="{{ sEn }}">Constituted under the Real Estate (Regulation and Development) Act, 2016</span><span style="{{ sHi }}">रेरा अधिनियम, 2016 के अंतर्गत गठित</span>
+      </div>
+    </div>
+    <button onClick="{{ goTrack }}" class="btn btn-secondary" style="height:38px;flex:none;white-space:nowrap">
+      <span style="{{ sEn }}">Track a complaint</span><span style="{{ sHi }}">शिकायत की स्थिति</span>
+    </button>
+    <button onClick="{{ goLogin }}" class="btn btn-primary" style="height:38px;flex:none;white-space:nowrap">
+      <span style="{{ sEn }}">Sign in</span><span style="{{ sHi }}">लॉग इन</span>
+    </button>
+  </div>
+  <nav style="max-width:1180px;margin:0 auto;padding:0 24px;display:flex;gap:26px;flex-wrap:wrap;align-items:stretch;font-family:var(--font-heading);font-size:15px;letter-spacing:.01em">
+    <button onClick="{{ goHome }}" style="{{ navHome }}"><span style="{{ sEn }}">Home</span><span style="{{ sHi }}">होम</span></button>
+    <button onClick="{{ goSearch }}" style="{{ navSearch }}"><span style="{{ sEn }}">Find a project</span><span style="{{ sHi }}">परियोजना खोजें</span></button>
+    <button onClick="{{ goAgents }}" style="{{ navAgents }}"><span style="{{ sEn }}">Agents</span><span style="{{ sHi }}">एजेंट</span></button>
+    <button onClick="{{ goComplaint }}" style="{{ navComplaint }}"><span style="{{ sEn }}">File a complaint</span><span style="{{ sHi }}">शिकायत दर्ज करें</span></button>
+    <button onClick="{{ goOrders }}" style="{{ navOrders }}"><span style="{{ sEn }}">Orders &amp; judgments</span><span style="{{ sHi }}">आदेश</span></button>
+    <button onClick="{{ goActs }}" style="{{ navActs }}"><span style="{{ sEn }}">Acts, rules &amp; forms</span><span style="{{ sHi }}">अधिनियम एवं नियम</span></button>
+    <button onClick="{{ goPromoter }}" style="{{ navPromoter }}"><span style="{{ sEn }}">For promoters</span><span style="{{ sHi }}">प्रोमोटर हेतु</span></button>
+    <button onClick="{{ goOfficer }}" style="{{ navOfficer }}">Officer view</button>
+  </nav>
+</header>
+
+<div aria-hidden="true" title="Sohrai and Khovar wall motifs of Jharkhand" style="border-bottom:1px solid var(--color-divider);opacity:.55;line-height:0">
+  <svg width="100%" height="20" role="presentation" style="display:block">
+    <defs>
+      <pattern id="jsohraiA" width="72" height="20" patternUnits="userSpaceOnUse">
+        <g fill="none" stroke="var(--color-accent)" strokeWidth="1">
+          <path d="M36 3 L45 10 L36 17 L27 10 Z"></path>
+          <path d="M36 7.5 L38.5 10 L36 12.5 L33.5 10 Z"></path>
+          <path d="M0 4 L8 10 L0 16"></path>
+          <path d="M72 4 L64 10 L72 16"></path>
+          <path d="M13 6 V14 M17 6 V14 M21 6 V14 M51 6 V14 M55 6 V14 M59 6 V14"></path>
+        </g>
+      </pattern>
+    </defs>
+    <rect width="100%" height="20" fill="url(#jsohraiA)"></rect>
+  </svg>
+</div>
+
+<main id="jmain" style="max-width:1180px;margin:0 auto;padding:0 24px 72px">
+
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+<div>
+  <section class="jh-home-hero">
+    <div class="jh-hero-frame blueprint">
+      <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+      <img class="jh-hero-img" src="./assets/heritage/birsa-munda-sal-forest-watercolor.png" alt="Watercolor painting of a bronze statue of Birsa Munda holding a bow, standing in a Jharkhand sal forest at sunset, bordered by a Sohrai-Khovar tribal art motif">
+      <div class="jh-hero-overlay">
+        <div class="jh-hero-copy">
+          <div class="jh-hero-eyebrow"><span class="rule"></span><span style="{{ sEn }}">Start here</span><span style="{{ sHi }}">यहां से शुरू करें</span></div>
+          <h1>
+            <span style="{{ sEn }}">Check the project before you pay.</span><span style="{{ sHi }}">भुगतान से पहले परियोजना जाँचें।</span>
+          </h1>
+          <p class="lede">
+            <span style="{{ sEn }}">Every legal housing project in Jharkhand carries a RERA registration number. Enter the number, the project name, or the promoter — we will tell you in one line whether it is safe to book.</span><span style="{{ sHi }}">झारखंड की प्रत्येक वैध आवासीय परियोजना का रेरा पंजीयन संख्या होता है। संख्या, परियोजना या प्रोमोटर का नाम दर्ज करें।</span>
+          </p>
+          <div class="blueprint jh-hero-search">
+            <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+            <label for="jverify" style="display:block;font-family:var(--font-heading);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--color-neutral-700);margin-bottom:8px">Verify a registration number or project</label>
+            <div style="display:flex;gap:10px">
+              <input id="jverify" class="input" value="{{ q }}" onChange="{{ onQ }}" placeholder="e.g. JHARERA/P/RAN/2023/000412 or Vaishali Heights" style="height:46px;font-size:15px;background:var(--color-bg)">
+              <button onClick="{{ goSearch }}" class="btn btn-primary" style="height:46px;padding:0 22px;font-size:15px;flex:none">Verify</button>
+            </div>
+            <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:12px;color:var(--color-neutral-600)">
+              <span>Try:</span>
+              <button onClick="{{ tryA }}" class="btn btn-ghost" style="font-size:12px;padding:0">Vaishali Heights, Ranchi</button>
+              <button onClick="{{ tryB }}" class="btn btn-ghost" style="font-size:12px;padding:0">Bokaro Sunrise (lapsed)</button>
+              <button onClick="{{ tryC }}" class="btn btn-ghost" style="font-size:12px;padding:0">Hazaribagh Meadows (suspended)</button>
+            </div>
+          </div>
+          <p class="jh-hero-updated">Registration status is drawn live from the Authority's register. Last updated 21 August 2026, 6:40 PM IST.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="jh-hero-bottom">
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+        <div class="jh-stat"><div style="font-family:var(--font-heading);font-size:31px;line-height:1">1,482</div><div style="font-size:11px;color:rgba(255,255,255,.7)">projects registered</div></div>
+        <div class="jh-stat"><div style="font-family:var(--font-heading);font-size:31px;line-height:1">3,067</div><div style="font-size:11px;color:rgba(255,255,255,.7)">complaints disposed</div></div>
+        <div class="jh-stat"><div style="font-family:var(--font-heading);font-size:31px;line-height:1">61</div><div style="font-size:11px;color:rgba(255,255,255,.7)">median days to disposal</div></div>
+        <div class="jh-stat"><div style="font-family:var(--font-heading);font-size:31px;line-height:1">906</div><div style="font-size:11px;color:rgba(255,255,255,.7)">licensed agents</div></div>
+      </div>
+      <div class="jh-links-col">
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+          <button onClick="{{ goComplaint }}" class="jh-quick-link"><span>File a complaint</span><span>→</span></button>
+          <button onClick="{{ goTrack }}" class="jh-quick-link"><span>Track a case</span><span>→</span></button>
+          <button onClick="{{ goPromoter }}" class="jh-quick-link"><span>For promoters</span><span>→</span></button>
+        </div>
+        <div style="font-size:11px;color:rgba(255,255,255,.55);text-align:right">Birsa Munda · Sal forest — Jharkhand’s land, people and promise</div>
+      </div>
+    </div>
+  </section>
+
+  <section style="margin-top:64px">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:20px;border-top:1px solid var(--color-divider);padding-top:20px">
+      <h2><span style="{{ sEn }}">Know your rights in plain words</span><span style="{{ sHi }}">सरल शब्दों में आपके अधिकार</span></h2>
+      <button onClick="{{ goActs }}" class="btn btn-ghost">Read the Act and Rules</button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:22px">
+      <div class="card blueprint" style="padding:18px">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <div class="card-kicker">Before booking</div>
+        <div class="card-title">An unregistered project cannot be sold to you</div>
+        <p class="card-body">No promoter may advertise, market, book or sell any plot or apartment without registering the project with the Authority. If there is no registration number on the brochure, walk away.</p>
+        <div class="card-meta">Section 3, RERA Act 2016</div>
+      </div>
+      <div class="card blueprint" style="padding:18px">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <div class="card-kicker">While building</div>
+        <div class="card-title">70% of your money must stay in a separate account</div>
+        <p class="card-body">Money collected from buyers goes into a dedicated bank account and can only be withdrawn for that project's construction, certified by an engineer and a chartered accountant.</p>
+        <div class="card-meta">Section 4(2)(l)(D)</div>
+      </div>
+      <div class="card blueprint" style="padding:18px">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <div class="card-kicker">On delay</div>
+        <div class="card-title">Late possession earns you interest, or your money back</div>
+        <p class="card-body">If the promoter misses the possession date in your agreement, you may withdraw with interest and compensation, or stay on and claim interest for every month of delay.</p>
+        <div class="card-meta">Section 18</div>
+      </div>
+    </div>
+  </section>
+
+  <section style="margin-top:56px;padding:28px;background:var(--color-accent-900);color:#fff">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:20px">
+      <div>
+        <div style="font-family:var(--font-heading);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-accent-300);margin-bottom:5px">Jharkhand in progress</div>
+        <h2 style="color:#fff">Growth that is visible, registered and accountable.</h2>
+      </div>
+      <p style="font-size:13px;line-height:1.5;max-width:38ch;color:rgba(255,255,255,.76);margin:0">A stronger register creates the confidence for thoughtful homes, public-facing streets and sustainable neighbourhoods.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px">
+      <article class="blueprint" style="overflow:hidden;background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.28)">
+        <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <div class="jh-built-photo ranchi"></div>
+        <div style="padding:15px 16px 17px"><div style="font-family:var(--font-heading);font-size:21px">Ranchi</div><div style="font-size:12px;color:rgba(255,255,255,.75)">Green, well-connected residential growth</div></div>
+      </article>
+      <article class="blueprint" style="overflow:hidden;background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.28)">
+        <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <div class="jh-built-photo jamshedpur"></div>
+        <div style="padding:15px 16px 17px"><div style="font-family:var(--font-heading);font-size:21px">Jamshedpur</div><div style="font-size:12px;color:rgba(255,255,255,.75)">Planned streets and productive commercial districts</div></div>
+      </article>
+      <article class="blueprint" style="overflow:hidden;background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.28)">
+        <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <div class="jh-built-photo homes"></div>
+        <div style="padding:15px 16px 17px"><div style="font-family:var(--font-heading);font-size:21px">Homes with trust</div><div style="font-size:12px;color:rgba(255,255,255,.75)">Transparent project information before every booking</div></div>
+      </article>
+    </div>
+  </section>
+
+  <section style="margin-top:56px;border-top:1px solid var(--color-divider);padding-top:20px">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:20px">
+      <div>
+        <div style="font-family:var(--font-heading);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:4px">The Authority</div>
+        <h2>Leadership of JharERA</h2>
+      </div>
+      <span style="font-size:12px;color:var(--color-neutral-600)">Working for accountable development in Jharkhand</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:22px">
+      <sc-for list="{{ leadership }}" as="l" hint-placeholder-count="3">
+        <article class="blueprint" style="padding:18px;display:grid;grid-template-columns:76px 1fr;gap:16px;align-items:center;background:linear-gradient(135deg,var(--color-accent-100),transparent 65%)">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+          <img src="{{ l.photo }}" alt="{{ l.name }}" style="width:76px;height:86px;object-fit:cover;object-position:top;border:2px solid var(--color-accent-300);filter:saturate(.82)">
+          <div>
+            <div style="font-family:var(--font-heading);font-weight:600;font-size:21px;line-height:1.05">{{ l.name }}</div>
+            <div style="font-size:13px;line-height:1.35;color:var(--color-accent-700);margin-top:5px">{{ l.role }}</div>
+            <div style="font-size:11px;color:var(--color-neutral-600);margin-top:7px">Government of Jharkhand</div>
+          </div>
+        </article>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="margin-top:56px;border-top:1px solid var(--color-divider);padding-top:20px">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:20px">
+      <h2>Recently registered projects</h2>
+      <button onClick="{{ goSearch }}" class="btn btn-ghost">See all 1,482</button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:22px">
+      <sc-for list="{{ recent }}" as="p" hint-placeholder-count="3">
+        <button onClick="{{ p.open }}" class="blueprint" style="{{ p.cardStyle }}">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+          <span class="tag {{ p.tagClass }}" style="align-self:flex-start">{{ p.status }}</span>
+          <span style="font-family:var(--font-heading);font-weight:600;font-size:20px;line-height:1.15;margin-top:10px;display:block">{{ p.name }}</span>
+          <span style="font-size:13px;color:var(--color-neutral-700);display:block">{{ p.promoter }}</span>
+          <span style="font-size:12px;color:var(--color-neutral-600);display:block;margin-top:8px">{{ p.district }} · {{ p.units }} units · {{ p.type }}</span>
+          <span style="font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--color-accent-700);display:block;margin-top:10px">{{ p.reg }}</span>
+        </button>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="margin-top:56px;border-top:1px solid var(--color-divider);padding-top:20px;display:grid;grid-template-columns:1.4fr 1fr;gap:40px">
+    <div>
+      <h2>Notices and circulars</h2>
+      <div style="margin-top:12px;display:flex;flex-direction:column">
+        <sc-for list="{{ notices }}" as="n" hint-placeholder-count="4">
+          <a class="jl" href="#jmain" style="display:flex;gap:16px;padding:12px 0;border-bottom:1px solid var(--color-divider);align-items:baseline">
+            <span style="font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--color-neutral-600);flex:none;width:88px">{{ n.date }}</span>
+            <span style="font-size:14px;flex:1">{{ n.title }}</span>
+            <span class="tag tag-neutral" style="flex:none">{{ n.kind }}</span>
+          </a>
+        </sc-for>
+      </div>
+    </div>
+    <div class="blueprint" style="padding:20px;align-self:start">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+      <h4>Need help from a person?</h4>
+      <p style="font-size:13px;color:var(--color-neutral-700)">The facilitation desk answers questions about filing, fees and hearings. No appointment needed.</p>
+      <div style="font-size:13px;display:flex;flex-direction:column;gap:8px;margin-top:12px">
+        <div><strong style="font-family:var(--font-heading)">Helpline</strong><br>0651-2200-XXX · Mon–Fri, 10:30–17:00</div>
+        <div><strong style="font-family:var(--font-heading)">Office</strong><br>3rd Floor, Nepal House, Doranda, Ranchi – 834002</div>
+        <div><strong style="font-family:var(--font-heading)">Email</strong><br>helpdesk@jharera.jharkhand.gov.in</div>
+      </div>
+    </div>
+  </section>
+</div>
+</sc-if>
+
+<sc-if value="{{ isSearch }}">
+<div style="padding-top:32px">
+  <div style="display:flex;align-items:baseline;justify-content:space-between;gap:20px">
+    <div>
+      <h1 style="font-size:38px;margin-bottom:4px"><span style="{{ sEn }}">Find a project</span><span style="{{ sHi }}">परियोजना खोजें</span></h1>
+      <p style="color:var(--color-neutral-700);font-size:15px;max-width:60ch">Search the live register. A “Registered” badge means the project is on the register and current; “Lapsed” or “Suspended” means ask questions before you pay.</p>
+    </div>
+  </div>
+
+  <div class="blueprint" style="margin-top:20px;padding:16px;background:var(--color-surface);display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:14px;align-items:end">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+    <div class="field">
+      <label for="jq">Project, promoter or registration number</label>
+      <input id="jq" class="input" value="{{ q }}" onChange="{{ onQ }}" placeholder="Search 1,482 projects" style="background:var(--color-bg)">
+    </div>
+    <div class="field">
+      <label for="jd">District</label>
+      <select id="jd" class="input" value="{{ district }}" onChange="{{ onDistrict }}" style="background:var(--color-bg)">
+        <sc-for list="{{ districts }}" as="d" hint-placeholder-count="4"><option value="{{ d }}">{{ d }}</option></sc-for>
+      </select>
+    </div>
+    <div class="field">
+      <label for="js">Registration status</label>
+      <select id="js" class="input" value="{{ status }}" onChange="{{ onStatus }}" style="background:var(--color-bg)">
+        <sc-for list="{{ statuses }}" as="s" hint-placeholder-count="4"><option value="{{ s }}">{{ s }}</option></sc-for>
+      </select>
+    </div>
+    <div class="field">
+      <label for="jt">Type</label>
+      <select id="jt" class="input" value="{{ ptype }}" onChange="{{ onType }}" style="background:var(--color-bg)">
+        <sc-for list="{{ types }}" as="t" hint-placeholder-count="3"><option value="{{ t }}">{{ t }}</option></sc-for>
+      </select>
+    </div>
+  </div>
+
+  <div style="display:flex;align-items:baseline;gap:14px;margin-top:18px">
+    <span style="font-family:var(--font-heading);font-size:15px">{{ resultCount }}</span>
+    <button onClick="{{ clearFilters }}" class="btn btn-ghost" style="font-size:12px">Clear filters</button>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:14px;margin-top:14px">
+    <sc-for list="{{ results }}" as="p" hint-placeholder-count="4">
+      <div class="blueprint" style="padding:18px 20px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <div>
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+            <span class="tag {{ p.tagClass }}">{{ p.status }}</span>
+            <span style="font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--color-neutral-600)">{{ p.reg }}</span>
+          </div>
+          <h3 style="margin:8px 0 2px">{{ p.name }}</h3>
+          <div style="font-size:14px;color:var(--color-neutral-700)">{{ p.promoter }} · {{ p.locality }}, {{ p.district }}</div>
+          <div style="display:flex;gap:26px;margin-top:12px;font-size:12px;color:var(--color-neutral-600);flex-wrap:wrap">
+            <span>{{ p.type }}</span>
+            <span>{{ p.units }} units</span>
+            <span>Possession {{ p.possession }}</span>
+            <span>{{ p.pct }}% built</span>
+            <span>{{ p.complaints }} complaints</span>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;align-items:stretch;min-width:170px">
+          <button onClick="{{ p.open }}" class="btn btn-primary">Open project record</button>
+          <span style="font-size:11px;color:var(--color-neutral-600);text-align:center">{{ p.validity }}</span>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+  <sc-if value="{{ noResults }}">
+    <div class="blueprint" style="padding:34px;text-align:center;margin-top:14px">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+      <h4>No project matches that</h4>
+      <p style="font-size:14px;color:var(--color-neutral-700);max-width:48ch;margin:0 auto">A project missing from this register may be unregistered — which is illegal to sell. You can report it to the Authority.</p>
+      <button onClick="{{ goComplaint }}" class="btn btn-secondary" style="margin-top:12px">Report an unregistered project</button>
+    </div>
+  </sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isProject }}">
+<div style="padding-top:24px">
+  <button onClick="{{ goSearch }}" class="btn btn-ghost" style="padding:0;margin-bottom:14px">← Back to results</button>
+  <div class="blueprint" style="{{ verdictStyle }}">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+    <div>
+      <div style="font-family:var(--font-heading);font-size:12px;letter-spacing:.14em;text-transform:uppercase;opacity:.75">Registration status</div>
+      <div style="font-family:var(--font-heading);font-weight:600;font-size:40px;line-height:1.05;margin-top:4px">{{ proj.verdict }}</div>
+      <div style="font-size:15px;max-width:56ch;margin-top:6px">{{ proj.verdictNote }}</div>
+    </div>
+    <div style="text-align:right;font-size:13px;line-height:1.6">
+      <div style="font-family:ui-monospace,Menlo,monospace;font-size:12px">{{ proj.reg }}</div>
+      <div>{{ proj.validity }}</div>
+      <div style="opacity:.75">Verified against the register today</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1.6fr 1fr;gap:40px;margin-top:34px">
+    <div>
+      <h1 style="font-size:40px;margin-bottom:4px">{{ proj.name }}</h1>
+      <p style="font-size:15px;color:var(--color-neutral-700)">{{ proj.promoter }} · {{ proj.locality }}, {{ proj.district }} · {{ proj.type }}</p>
+
+      <h4 style="margin-top:30px;padding-bottom:8px;border-bottom:1px solid var(--color-divider)">Construction and sales, as declared this quarter</h4>
+      <p style="font-size:12px;color:var(--color-neutral-600)">Quarterly progress report for Apr–Jun 2026, filed 12 July 2026. Read as data, not a scanned PDF.</p>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:14px">
+        <div class="blueprint" style="padding:14px">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+          <div style="font-family:var(--font-heading);font-size:30px;line-height:1">{{ proj.pct }}%</div>
+          <div style="font-size:11px;color:var(--color-neutral-600)">construction complete</div>
+        </div>
+        <div class="blueprint" style="padding:14px">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+          <div style="font-family:var(--font-heading);font-size:30px;line-height:1">{{ proj.sold }}</div>
+          <div style="font-size:11px;color:var(--color-neutral-600)">of {{ proj.units }} units booked</div>
+        </div>
+        <div class="blueprint" style="padding:14px">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+          <div style="font-family:var(--font-heading);font-size:30px;line-height:1">{{ proj.possession }}</div>
+          <div style="font-size:11px;color:var(--color-neutral-600)">promised possession</div>
+        </div>
+        <div class="blueprint" style="padding:14px">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+          <div style="font-family:var(--font-heading);font-size:30px;line-height:1">{{ proj.complaints }}</div>
+          <div style="font-size:11px;color:var(--color-neutral-600)">complaints on record</div>
+        </div>
+      </div>
+
+      <div style="margin-top:22px">
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--color-neutral-600);margin-bottom:6px">
+          <span>Progress against the declared timeline</span><span>{{ proj.timelineNote }}</span>
+        </div>
+        <div style="height:26px;border:1px solid var(--color-divider);position:relative;background:var(--color-surface)">
+          <div style="{{ proj.barStyle }}"></div>
+          <div style="{{ proj.markStyle }}"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--color-neutral-600);margin-top:5px">
+          <span>Launch {{ proj.launch }}</span><span>Today</span><span>Possession {{ proj.possession }}</span>
+        </div>
+      </div>
+
+      <h4 style="margin-top:34px;padding-bottom:8px;border-bottom:1px solid var(--color-divider)">What is on file</h4>
+      <table class="table" style="margin-top:6px">
+        <thead><tr><th>Document</th><th>Filed</th><th>Status</th><th></th></tr></thead>
+        <tbody>
+          <sc-for list="{{ proj.docs }}" as="d" hint-placeholder-count="5">
+            <tr>
+              <td>{{ d.name }}<span style="{{ jargonStyle }}"> — {{ d.plain }}</span></td>
+              <td style="font-size:13px;color:var(--color-neutral-600)">{{ d.filed }}</td>
+              <td><span class="tag {{ d.tagClass }}">{{ d.status }}</span></td>
+              <td style="text-align:right"><button class="btn btn-ghost" style="font-size:12px">View</button></td>
+            </tr>
+          </sc-for>
+        </tbody>
+      </table>
+
+      <h4 style="margin-top:34px;padding-bottom:8px;border-bottom:1px solid var(--color-divider)">Complaints against this project</h4>
+      <table class="table" style="margin-top:6px">
+        <thead><tr><th>Case</th><th>Filed</th><th>Issue</th><th>Stage</th></tr></thead>
+        <tbody>
+          <sc-for list="{{ proj.cases }}" as="c" hint-placeholder-count="2">
+            <tr>
+              <td style="font-family:ui-monospace,Menlo,monospace;font-size:12px">{{ c.id }}</td>
+              <td style="font-size:13px">{{ c.filed }}</td>
+              <td style="font-size:13px">{{ c.issue }}</td>
+              <td><span class="tag tag-neutral">{{ c.stage }}</span></td>
+            </tr>
+          </sc-for>
+        </tbody>
+      </table>
+    </div>
+
+    <aside style="display:flex;flex-direction:column;gap:18px">
+      <div class="blueprint duotone" style="aspect-ratio:4/3;background:var(--color-neutral-300);display:grid;place-items:center;color:var(--color-neutral-700);font-size:12px;text-align:center;padding:12px">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        Site photograph<br>(uploaded by promoter, Jun 2026)
+      </div>
+      <div class="blueprint" style="padding:18px">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <h5>Before you book, check</h5>
+        <div style="display:flex;flex-direction:column;gap:9px;margin-top:10px;font-size:13px">
+          <sc-for list="{{ proj.checks }}" as="c" hint-placeholder-count="4">
+            <div style="display:flex;gap:9px;align-items:flex-start">
+              <span aria-hidden="true" style="{{ c.markStyle }}">{{ c.mark }}</span>
+              <span>{{ c.text }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div class="blueprint" style="padding:18px">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <h5>Something wrong here?</h5>
+        <p style="font-size:13px;color:var(--color-neutral-700)">Delay, a changed layout, extra charges or refused possession are all grounds for a complaint. Filing costs ₹1,000.</p>
+        <button onClick="{{ goComplaint }}" class="btn btn-primary btn-block">File a complaint about this project</button>
+      </div>
+      <div class="blueprint" style="padding:18px">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <h5>Promoter on record</h5>
+        <div style="font-size:13px;line-height:1.7;margin-top:6px">
+          <div><strong style="font-family:var(--font-heading)">{{ proj.promoter }}</strong></div>
+          <div style="color:var(--color-neutral-700)">{{ proj.promoterAddr }}</div>
+          <div style="color:var(--color-neutral-700)">Other projects: {{ proj.promoterOther }}</div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isComplaint }}">
+<div style="padding-top:32px;display:grid;grid-template-columns:1fr 300px;gap:44px;align-items:start">
+  <div>
+    <h1 style="font-size:38px;margin-bottom:4px"><span style="{{ sEn }}">File a complaint</span><span style="{{ sHi }}">शिकायत दर्ज करें</span></h1>
+    <p style="color:var(--color-neutral-700);font-size:15px;max-width:62ch">Four steps, about ten minutes. Nothing is submitted until you review it at the end, and your answers are saved as a draft as you go.</p>
+
+    <div style="display:flex;gap:0;margin:26px 0 28px;border:1px solid var(--color-divider)">
+      <sc-for list="{{ steps }}" as="st" hint-placeholder-count="4">
+        <div style="{{ st.style }}">
+          <span style="font-family:ui-monospace,Menlo,monospace;font-size:11px;opacity:.7">STEP {{ st.n }}</span>
+          <span style="font-family:var(--font-heading);font-size:15px;display:block;line-height:1.2">{{ st.label }}</span>
+        </div>
+      </sc-for>
+    </div>
+
+    <sc-if value="{{ step1 }}">
+    <div>
+      <h3>Is this the right place for your problem?</h3>
+      <p style="font-size:14px;color:var(--color-neutral-700);max-width:62ch">The Authority can only decide disputes about registered real-estate projects in Jharkhand. Answering this saves you a rejected filing and a wasted fee.</p>
+      <div class="blueprint" style="padding:20px;margin-top:16px">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <div class="field" style="margin-bottom:16px">
+          <label>What went wrong?</label>
+          <div style="display:flex;flex-direction:column;gap:9px;margin-top:6px">
+            <sc-for list="{{ grounds }}" as="g" hint-placeholder-count="5">
+              <button onClick="{{ g.pick }}" style="{{ g.style }}">
+                <span style="{{ g.dotStyle }}"></span>
+                <span><strong style="font-family:var(--font-heading);font-weight:600">{{ g.title }}</strong><span style="display:block;font-size:12px;color:var(--color-neutral-600)">{{ g.note }}</span></span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+        <div class="field">
+          <label for="jcp">Which project is this about?</label>
+          <input id="jcp" class="input" value="{{ cProject }}" onChange="{{ onCProject }}" placeholder="Start typing the project or registration number">
+          <p style="font-size:12px;color:var(--color-neutral-600);margin-top:6px">{{ projectMatchNote }}</p>
+        </div>
+      </div>
+      <div class="blueprint" style="{{ eligStyle }}">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <strong style="font-family:var(--font-heading);font-size:16px">{{ eligTitle }}</strong>
+        <p style="font-size:13px;margin:6px 0 0">{{ eligNote }}</p>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ step2 }}">
+    <div>
+      <h3>Tell us what happened</h3>
+      <p style="font-size:14px;color:var(--color-neutral-700);max-width:62ch">Write it the way you would explain it to a neighbour. Legal drafting is not required — the bench reads your own words.</p>
+      <div class="blueprint" style="padding:20px;margin-top:16px;display:grid;gap:16px">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div class="field"><label for="jn">Your name</label><input id="jn" class="input" placeholder="As on your booking agreement"></div>
+          <div class="field"><label for="jm">Mobile number</label><input id="jm" class="input" placeholder="10 digits"></div>
+          <div class="field"><label for="ju">Unit or plot number</label><input id="ju" class="input" placeholder="e.g. Tower B, Flat 604"></div>
+          <div class="field"><label for="jdt">Date of your agreement</label><input id="jdt" class="input" type="date"></div>
+        </div>
+        <div class="field">
+          <label for="jdesc">What happened, in your words</label>
+          <textarea id="jdesc" class="input" placeholder="I booked Flat 604 in March 2023. Possession was promised in December 2025. The building is still incomplete and the promoter has not replied to my emails since April."></textarea>
+        </div>
+        <div class="field">
+          <label>What do you want the Authority to order?</label>
+          <div style="display:flex;gap:18px;flex-wrap:wrap;margin-top:6px">
+            <label class="radio"><input type="radio" name="jrelief"><span class="dot"></span>Interest for every month of delay</label>
+            <label class="radio"><input type="radio" name="jrelief"><span class="dot"></span>Refund of what I paid, with interest</label>
+            <label class="radio"><input type="radio" name="jrelief"><span class="dot"></span>Possession and registry of my unit</label>
+            <label class="radio"><input type="radio" name="jrelief"><span class="dot"></span>Compensation for loss</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ step3 }}">
+    <div>
+      <h3>Attach what you have</h3>
+      <p style="font-size:14px;color:var(--color-neutral-700);max-width:62ch">Only the first document is mandatory. Missing papers will not stop your filing — the bench can call for them later.</p>
+      <div style="display:flex;flex-direction:column;gap:12px;margin-top:16px">
+        <sc-for list="{{ uploads }}" as="u" hint-placeholder-count="4">
+          <div class="blueprint" style="padding:16px 18px;display:flex;align-items:center;gap:18px">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+            <div style="flex:1">
+              <div style="font-family:var(--font-heading);font-weight:600;font-size:16px">{{ u.name }} <span class="tag {{ u.tagClass }}" style="margin-left:6px">{{ u.need }}</span></div>
+              <div style="font-size:12px;color:var(--color-neutral-600)">{{ u.hint }}</div>
+            </div>
+            <button class="btn btn-secondary" style="flex:none">Choose file</button>
+          </div>
+        </sc-for>
+      </div>
+      <p style="font-size:12px;color:var(--color-neutral-600);margin-top:12px">PDF, JPG or PNG up to 10 MB each. Photographs of paper documents are accepted.</p>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ step4 }}">
+    <div>
+      <h3>Check and pay</h3>
+      <table class="table" style="margin-top:12px">
+        <tbody>
+          <sc-for list="{{ review }}" as="r" hint-placeholder-count="6">
+            <tr>
+              <td style="width:38%;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--color-neutral-600)">{{ r.k }}</td>
+              <td>{{ r.v }}</td>
+              <td style="text-align:right"><button onClick="{{ r.edit }}" class="btn btn-ghost" style="font-size:12px">Edit</button></td>
+            </tr>
+          </sc-for>
+        </tbody>
+      </table>
+      <div class="blueprint" style="padding:20px;margin-top:22px;display:flex;justify-content:space-between;align-items:center;gap:20px;background:var(--color-surface)">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <div>
+          <div style="font-family:var(--font-heading);font-size:20px">Filing fee ₹1,000</div>
+          <div style="font-size:12px;color:var(--color-neutral-600)">Prescribed under Rule 36. Paid once. Refunded if the complaint is returned for want of jurisdiction.</div>
+        </div>
+        <button onClick="{{ submitComplaint }}" class="btn btn-primary" style="height:44px;padding:0 22px;font-size:15px;flex:none">Pay and submit</button>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ stepDone }}">
+    <div class="blueprint" style="padding:32px;margin-top:8px">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+      <span class="tag tag-accent">Filed</span>
+      <h2 style="margin:12px 0 6px">Your complaint is registered</h2>
+      <p style="font-size:15px;color:var(--color-neutral-700);max-width:58ch">Keep this number. You will get an SMS at every stage, and you can check the case yourself at any time without calling the office.</p>
+      <div style="font-family:ui-monospace,Menlo,monospace;font-size:26px;margin:16px 0 4px">JH/CMP/2026/00711</div>
+      <div style="font-size:13px;color:var(--color-neutral-600)">Filed 22 August 2026 · Scrutiny expected by 29 August 2026 · Assigned to Bench II, Ranchi</div>
+      <div style="display:flex;gap:12px;margin-top:22px">
+        <button onClick="{{ goTrack }}" class="btn btn-primary">Track this complaint</button>
+        <button class="btn btn-secondary">Download acknowledgement</button>
+      </div>
+    </div>
+    </sc-if>
+
+    <div style="{{ wizardNavStyle }}">
+      <button onClick="{{ prevStep }}" class="btn btn-secondary">← Back</button>
+      <span style="font-size:12px;color:var(--color-neutral-600);margin-right:auto">Draft saved a moment ago</span>
+      <button onClick="{{ nextStep }}" class="btn btn-primary">{{ nextLabel }}</button>
+    </div>
+  </div>
+
+  <aside style="display:flex;flex-direction:column;gap:16px">
+    <div class="blueprint" style="padding:18px">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+      <h5>What happens after you file</h5>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:10px;font-size:13px">
+        <div><strong style="font-family:var(--font-heading)">Within 7 days</strong><br><span style="color:var(--color-neutral-700)">The registry checks your papers and either accepts the case or tells you exactly what is missing.</span></div>
+        <div><strong style="font-family:var(--font-heading)">Within 30 days</strong><br><span style="color:var(--color-neutral-700)">Notice goes to the promoter, who must reply.</span></div>
+        <div><strong style="font-family:var(--font-heading)">Around 60 days</strong><br><span style="color:var(--color-neutral-700)">First hearing. You may appear yourself; a lawyer is not required.</span></div>
+      </div>
+    </div>
+    <div class="blueprint" style="padding:18px">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+      <h5>Stuck?</h5>
+      <p style="font-size:13px;color:var(--color-neutral-700)">Call 0651-2200-XXX between 10:30 and 17:00, or ask at the facilitation desk in Nepal House. Assistance with filling this form is free.</p>
+    </div>
+  </aside>
+</div>
+</sc-if>
+
+<sc-if value="{{ isTrack }}">
+<div style="padding-top:32px">
+  <h1 style="font-size:38px;margin-bottom:4px"><span style="{{ sEn }}">Track a complaint</span><span style="{{ sHi }}">शिकायत की स्थिति</span></h1>
+  <p style="color:var(--color-neutral-700);font-size:15px;max-width:60ch">Enter your case number. You will see where the file physically is, what happened at the last hearing, and what is expected next.</p>
+  <div style="display:flex;gap:12px;margin-top:18px;max-width:560px">
+    <input class="input" value="{{ caseQ }}" onChange="{{ onCaseQ }}" placeholder="JH/CMP/2026/00418" style="height:44px">
+    <button onClick="{{ doTrack }}" class="btn btn-primary" style="height:44px;padding:0 20px;flex:none">Check status</button>
+  </div>
+  <p style="font-size:12px;color:var(--color-neutral-600);margin-top:8px">Sample case: JH/CMP/2026/00418</p>
+
+  <sc-if value="{{ tracked }}">
+  <div style="margin-top:34px;display:grid;grid-template-columns:1.5fr 1fr;gap:40px;align-items:start">
+    <div>
+      <div class="blueprint" style="padding:22px 24px;background:var(--color-accent);border-color:var(--color-accent);color:#f2f2f3">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <div style="font-family:var(--font-heading);font-size:12px;letter-spacing:.14em;text-transform:uppercase;opacity:.8">Where your case stands</div>
+        <div style="font-family:var(--font-heading);font-weight:600;font-size:32px;line-height:1.1;margin-top:4px">Hearing fixed for 27 August 2026</div>
+        <div style="font-size:14px;margin-top:6px">Bench II, Ranchi · 11:30 AM · Item 14 on the cause list. You may attend in person or join the video link sent by SMS.</div>
+      </div>
+      <div style="display:flex;gap:26px;margin-top:16px;font-size:13px;color:var(--color-neutral-700);flex-wrap:wrap">
+        <span><strong style="font-family:var(--font-heading)">Case</strong> JH/CMP/2026/00418</span>
+        <span><strong style="font-family:var(--font-heading)">Filed</strong> 02 Feb 2026</span>
+        <span><strong style="font-family:var(--font-heading)">Day</strong> 201 of a 61-day median</span>
+        <span><strong style="font-family:var(--font-heading)">Against</strong> Ambey Constructions</span>
+      </div>
+
+      <h4 style="margin-top:32px;padding-bottom:8px;border-bottom:1px solid var(--color-divider)">Everything that has happened</h4>
+      <div style="margin-top:16px">
+        <sc-for list="{{ timeline }}" as="t" hint-placeholder-count="6">
+          <div style="display:grid;grid-template-columns:96px 22px 1fr;gap:14px;align-items:start">
+            <div style="font-size:12px;color:var(--color-neutral-600);padding-top:2px;text-align:right">{{ t.date }}</div>
+            <div style="display:flex;flex-direction:column;align-items:center;align-self:stretch">
+              <span style="{{ t.dotStyle }}"></span>
+              <span style="{{ t.lineStyle }}"></span>
+            </div>
+            <div style="padding-bottom:22px">
+              <div style="font-family:var(--font-heading);font-weight:600;font-size:17px">{{ t.title }}</div>
+              <div style="font-size:13px;color:var(--color-neutral-700);max-width:60ch">{{ t.body }}</div>
+              <div style="{{ t.docStyle }}">{{ t.doc }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <aside style="display:flex;flex-direction:column;gap:16px">
+      <div class="blueprint" style="padding:18px">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <h5>What you need to do</h5>
+        <p style="font-size:13px;color:var(--color-neutral-700);margin-bottom:10px">Bring the original booking agreement and payment receipts to the hearing. Nothing else is pending from your side.</p>
+        <button class="btn btn-secondary btn-block">Add hearing to calendar</button>
+        <button class="btn btn-ghost btn-block">Request an adjournment</button>
+      </div>
+      <div class="blueprint" style="padding:18px">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <h5>Who is handling it</h5>
+        <div style="font-size:13px;line-height:1.7;color:var(--color-neutral-700)">Registry Clerk, Bench II<br>bench2.registry@jharera.jharkhand.gov.in<br>0651-2200-XXX ext. 214</div>
+      </div>
+      <div class="blueprint" style="padding:18px">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <h5>Papers on file</h5>
+        <div style="display:flex;flex-direction:column;gap:7px;margin-top:8px;font-size:13px">
+          <a class="jl" href="#jmain">Complaint and annexures (filed by you)</a>
+          <a class="jl" href="#jmain">Reply of the promoter, 14 Apr 2026</a>
+          <a class="jl" href="#jmain">Order sheet, 12 Jun 2026</a>
+        </div>
+      </div>
+    </aside>
+  </div>
+  </sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isPromoter }}">
+<div style="padding-top:32px">
+  <h1 style="font-size:38px;margin-bottom:4px"><span style="{{ sEn }}">Register a project</span><span style="{{ sHi }}">परियोजना पंजीकरण</span></h1>
+  <p style="color:var(--color-neutral-700);font-size:15px;max-width:64ch">One application, Form A. You can leave and return — every section saves on its own. The Authority must decide within 30 days of a complete application.</p>
+  <div style="display:grid;grid-template-columns:1fr 300px;gap:44px;margin-top:26px;align-items:start">
+    <div style="display:flex;flex-direction:column;gap:22px">
+      <sc-for list="{{ promoterSections }}" as="sec" hint-placeholder-count="4">
+        <div class="blueprint" style="padding:20px 22px">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px">
+            <h4 style="margin:0"><span style="font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--color-accent-700);margin-right:8px">{{ sec.n }}</span>{{ sec.title }}</h4>
+            <span class="tag {{ sec.tagClass }}">{{ sec.status }}</span>
+          </div>
+          <p style="font-size:13px;color:var(--color-neutral-700);margin:8px 0 14px;max-width:64ch">{{ sec.note }}</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+            <sc-for list="{{ sec.fields }}" as="f" hint-placeholder-count="4">
+              <div class="field"><label>{{ f.label }}</label><input class="input" placeholder="{{ f.ph }}"></div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+      <div style="display:flex;gap:12px;align-items:center">
+        <button class="btn btn-primary" style="height:42px;padding:0 20px">Pay fee and submit Form A</button>
+        <button class="btn btn-secondary" style="height:42px">Save and exit</button>
+        <span style="font-size:12px;color:var(--color-neutral-600)">Fee calculated from plot area: ₹1,84,000</span>
+      </div>
+    </div>
+    <aside style="display:flex;flex-direction:column;gap:16px">
+      <div class="blueprint" style="padding:18px">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <h5>Completion</h5>
+        <div style="height:8px;border:1px solid var(--color-divider);margin:8px 0 6px;position:relative;background:var(--color-surface)">
+          <div style="position:absolute;inset:0 auto 0 0;width:62%;background:var(--color-accent)"></div>
+        </div>
+        <div style="font-size:12px;color:var(--color-neutral-600)">3 of 5 sections complete. Two documents outstanding.</div>
+      </div>
+      <div class="blueprint" style="padding:18px">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <h5>Papers you will need</h5>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px;font-size:13px;color:var(--color-neutral-700)">
+          <div>Authenticated copy of PAN and incorporation</div>
+          <div>Title deed and encumbrance certificate</div>
+          <div>Sanctioned plan and layout approval</div>
+          <div>Proforma of allotment letter and agreement for sale</div>
+          <div>Declaration in Form B on stamp paper</div>
+        </div>
+      </div>
+      <div class="blueprint" style="padding:18px">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <h5>Obligations after registration</h5>
+        <p style="font-size:13px;color:var(--color-neutral-700)">Quarterly progress reports every three months, 70% of collections in the designated account, and the registration number on every advertisement.</p>
+      </div>
+    </aside>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isLogin }}">
+<div style="padding-top:52px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;min-height:520px">
+  <div>
+    <h1 style="font-size:40px;max-width:18ch"><span style="{{ sEn }}">One account for everything you do here</span><span style="{{ sHi }}">एक खाता, सभी सेवाएँ</span></h1>
+    <p style="font-size:15px;color:var(--color-neutral-700);max-width:48ch">Sign in to see your complaints, your bookings and your filings in one place. Citizens can also use the portal without an account — only filing needs identity.</p>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-top:24px;max-width:420px">
+      <sc-for list="{{ roles }}" as="r" hint-placeholder-count="4">
+        <button onClick="{{ r.pick }}" style="{{ r.style }}">
+          <span style="{{ r.dotStyle }}"></span>
+          <span><strong style="font-family:var(--font-heading);font-weight:600;font-size:16px">{{ r.title }}</strong><span style="display:block;font-size:12px;color:var(--color-neutral-600)">{{ r.note }}</span></span>
+        </button>
+      </sc-for>
+    </div>
+  </div>
+  <div class="blueprint" style="padding:28px;background:var(--color-surface)">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+    <h4>{{ loginTitle }}</h4>
+    <div style="display:flex;flex-direction:column;gap:14px;margin-top:14px">
+      <div class="field"><label>{{ loginIdLabel }}</label><input class="input" placeholder="{{ loginIdPh }}" style="background:var(--color-bg)"></div>
+      <div class="field"><label>One-time password</label><input class="input" placeholder="Sent by SMS" style="background:var(--color-bg)"></div>
+      <button onClick="{{ goDash }}" class="btn btn-primary" style="height:42px">Sign in</button>
+      <div style="font-size:12px;color:var(--color-neutral-600)">No account? Filing a complaint creates one for you automatically. Government officers sign in through the state SSO.</div>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isDash }}">
+<div style="padding-top:32px">
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap">
+    <div>
+      <span class="tag tag-neutral">Citizen account</span>
+      <h1 style="font-size:38px;margin:8px 0 2px">Sunita Devi</h1>
+      <p style="color:var(--color-neutral-700);font-size:14px">Ranchi · Signed in with mobile ending 4412 · Aadhaar verified</p>
+    </div>
+    <button onClick="{{ goComplaint }}" class="btn btn-primary" style="height:40px">File a new complaint</button>
+  </div>
+
+  <div class="blueprint" style="padding:20px 22px;margin-top:26px;display:flex;gap:24px;align-items:center;justify-content:space-between;flex-wrap:wrap">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+    <div>
+      <div style="font-family:var(--font-heading);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-accent-700)">Needs your attention</div>
+      <div style="font-family:var(--font-heading);font-weight:600;font-size:24px;margin-top:2px">Hearing in your case JH/CMP/2026/00418 is on 27 August</div>
+      <div style="font-size:13px;color:var(--color-neutral-700)">Bring the booking agreement and payment receipts. Bench II, Ranchi, 11:30 AM.</div>
+    </div>
+    <button onClick="{{ goTrack }}" class="btn btn-primary" style="flex:none">Open case</button>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:36px">
+    <div>
+      <h4 style="padding-bottom:8px;border-bottom:1px solid var(--color-divider)">Your complaints</h4>
+      <table class="table" style="margin-top:6px">
+        <thead><tr><th>Case</th><th>Against</th><th>Stage</th><th></th></tr></thead>
+        <tbody>
+          <tr><td style="font-family:ui-monospace,Menlo,monospace;font-size:12px">JH/CMP/2026/00418</td><td>Ambey Constructions</td><td><span class="tag tag-outline">Hearing fixed</span></td><td style="text-align:right"><button onClick="{{ goTrack }}" class="btn btn-ghost" style="font-size:12px">Track</button></td></tr>
+          <tr><td style="font-family:ui-monospace,Menlo,monospace;font-size:12px">JH/CMP/2025/03310</td><td>Ambey Constructions</td><td><span class="tag tag-neutral">Disposed</span></td><td style="text-align:right"><button class="btn btn-ghost" style="font-size:12px">Read order</button></td></tr>
+        </tbody>
+      </table>
+      <h4 style="margin-top:30px;padding-bottom:8px;border-bottom:1px solid var(--color-divider)">Projects you follow</h4>
+      <p style="font-size:13px;color:var(--color-neutral-700);margin-top:8px">You get an SMS whenever the registration status or the quarterly report of a followed project changes.</p>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px">
+        <div class="blueprint" style="padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:14px">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+          <div><div style="font-family:var(--font-heading);font-weight:600;font-size:16px">Bokaro Sunrise Apartments</div><div style="font-size:12px;color:var(--color-neutral-600)">Registration lapsed 30 Jun 2025 · 74% built</div></div>
+          <span class="tag tag-neutral">Lapsed</span>
+        </div>
+        <div class="blueprint" style="padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:14px">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+          <div><div style="font-family:var(--font-heading);font-weight:600;font-size:16px">Vaishali Heights</div><div style="font-size:12px;color:var(--color-neutral-600)">Quarterly report filed 12 Jul 2026 · 68% built</div></div>
+          <span class="tag tag-accent">Registered</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h4 style="padding-bottom:8px;border-bottom:1px solid var(--color-divider)">Documents and receipts</h4>
+      <div style="display:flex;flex-direction:column;gap:0;margin-top:6px">
+        <sc-for list="{{ dashDocs }}" as="d" hint-placeholder-count="4">
+          <div style="display:flex;justify-content:space-between;gap:14px;padding:11px 0;border-bottom:1px solid var(--color-divider);font-size:13px">
+            <span>{{ d.name }}</span>
+            <span style="color:var(--color-neutral-600);flex:none">{{ d.date }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <div class="blueprint" style="padding:18px;margin-top:26px">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <h5>Notification preferences</h5>
+        <div style="display:flex;flex-direction:column;gap:9px;margin-top:10px;font-size:13px">
+          <label class="radio"><input type="radio" name="jnotif" defaultChecked="{{ true }}"><span class="dot"></span>SMS in Hindi</label>
+          <label class="radio"><input type="radio" name="jnotif"><span class="dot"></span>SMS in English</label>
+          <label class="radio"><input type="radio" name="jnotif"><span class="dot"></span>Email only</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isAgents }}">
+<div style="padding-top:32px">
+  <h1 style="font-size:38px;margin-bottom:4px"><span style="{{ sEn }}">Registered agents</span><span style="{{ sHi }}">पंजीकृत एजेंट</span></h1>
+  <p style="color:var(--color-neutral-700);font-size:15px;max-width:62ch">An unregistered agent may not facilitate the sale of any registered project. Check the person before you hand over a cheque or share documents.</p>
+  <div style="display:flex;gap:12px;margin-top:18px;max-width:600px">
+    <input class="input" value="{{ agentQ }}" onChange="{{ onAgentQ }}" placeholder="Agent name, firm or registration number" style="height:42px">
+    <button class="btn btn-secondary" style="height:42px;flex:none">Search</button>
+  </div>
+  <table class="table" style="margin-top:22px">
+    <thead><tr><th>Agent</th><th>Registration</th><th>District</th><th>Valid till</th><th>Status</th><th>Complaints</th></tr></thead>
+    <tbody>
+      <sc-for list="{{ agents }}" as="a" hint-placeholder-count="5">
+        <tr>
+          <td><strong style="font-family:var(--font-heading);font-weight:600;font-size:15px">{{ a.name }}</strong><div style="font-size:12px;color:var(--color-neutral-600)">{{ a.firm }}</div></td>
+          <td style="font-family:ui-monospace,Menlo,monospace;font-size:12px">{{ a.reg }}</td>
+          <td style="font-size:13px">{{ a.district }}</td>
+          <td style="font-size:13px">{{ a.till }}</td>
+          <td><span class="tag {{ a.tagClass }}">{{ a.status }}</span></td>
+          <td style="font-size:13px">{{ a.complaints }}</td>
+        </tr>
+      </sc-for>
+    </tbody>
+  </table>
+  <div class="blueprint" style="padding:18px 20px;margin-top:26px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+    <div><div style="font-family:var(--font-heading);font-weight:600;font-size:18px">Are you an agent?</div><div style="font-size:13px;color:var(--color-neutral-700)">Registration costs ₹10,000 for an individual and is valid for five years. Renewal is now fully online.</div></div>
+    <button class="btn btn-primary" style="flex:none">Apply for agent registration</button>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isOrders }}">
+<div style="padding-top:32px">
+  <h1 style="font-size:38px;margin-bottom:4px"><span style="{{ sEn }}">Orders and judgments</span><span style="{{ sHi }}">आदेश एवं निर्णय</span></h1>
+  <p style="color:var(--color-neutral-700);font-size:15px;max-width:64ch">Every order the Authority has passed, searchable by its text — not a folder of scanned files. Each entry carries a one-line summary of what was decided and what relief was granted.</p>
+  <div style="display:flex;gap:12px;margin-top:18px;max-width:680px">
+    <input class="input" value="{{ orderQ }}" onChange="{{ onOrderQ }}" placeholder="Search inside orders — e.g. delay interest, refund, Section 18" style="height:42px">
+    <button class="btn btn-secondary" style="height:42px;flex:none">Search</button>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:14px;margin-top:24px">
+    <sc-for list="{{ orders }}" as="o" hint-placeholder-count="4">
+      <div class="blueprint" style="padding:18px 20px">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+          <span style="font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--color-accent-700)">{{ o.no }}</span>
+          <span class="tag tag-neutral">{{ o.section }}</span>
+          <span style="font-size:12px;color:var(--color-neutral-600)">{{ o.date }}</span>
+          <span style="margin-left:auto;font-size:12px;color:var(--color-neutral-600)">{{ o.bench }}</span>
+        </div>
+        <h3 style="margin:10px 0 4px">{{ o.parties }}</h3>
+        <p style="font-size:14px;color:var(--color-neutral-700);max-width:88ch;margin-bottom:10px">{{ o.headnote }}</p>
+        <div style="display:flex;gap:10px">
+          <button class="btn btn-secondary" style="font-size:13px">Read the order</button>
+          <button class="btn btn-ghost" style="font-size:13px">Download PDF</button>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isActs }}">
+<div style="padding-top:32px">
+  <h1 style="font-size:38px;margin-bottom:4px"><span style="{{ sEn }}">Acts, rules and forms</span><span style="{{ sHi }}">अधिनियम, नियम एवं प्रपत्र</span></h1>
+  <p style="color:var(--color-neutral-700);font-size:15px;max-width:64ch">The law as it applies in Jharkhand, in both languages, readable in the browser as well as downloadable. Forms are fillable online — download only if you need paper.</p>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:26px">
+    <sc-for list="{{ lawDocs }}" as="l" hint-placeholder-count="6">
+      <div class="blueprint" style="padding:18px;display:flex;flex-direction:column;gap:8px">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <div class="card-kicker">{{ l.kind }}</div>
+        <div style="font-family:var(--font-heading);font-weight:600;font-size:19px;line-height:1.2">{{ l.title }}</div>
+        <p style="font-size:13px;color:var(--color-neutral-700);flex:1;margin:0">{{ l.note }}</p>
+        <div style="display:flex;gap:8px;margin-top:6px">
+          <button class="btn btn-secondary" style="font-size:12px">Read</button>
+          <button class="btn btn-ghost" style="font-size:12px">हिन्दी</button>
+          <button class="btn btn-ghost" style="font-size:12px">PDF</button>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+  <h4 style="margin-top:40px;padding-bottom:8px;border-bottom:1px solid var(--color-divider)">Forms and fees</h4>
+  <table class="table" style="margin-top:6px">
+    <thead><tr><th>Form</th><th>Who files it</th><th>Fee</th><th>How</th></tr></thead>
+    <tbody>
+      <sc-for list="{{ forms }}" as="f" hint-placeholder-count="5">
+        <tr>
+          <td><strong style="font-family:var(--font-heading);font-weight:600">{{ f.name }}</strong><div style="font-size:12px;color:var(--color-neutral-600)">{{ f.purpose }}</div></td>
+          <td style="font-size:13px">{{ f.who }}</td>
+          <td style="font-size:13px">{{ f.fee }}</td>
+          <td><button class="btn btn-ghost" style="font-size:12px">Fill online</button></td>
+        </tr>
+      </sc-for>
+    </tbody>
+  </table>
+</div>
+</sc-if>
+
+<sc-if value="{{ isOfficer }}">
+<div style="padding-top:32px">
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap">
+    <div>
+      <span class="tag tag-outline">Internal · Bench II, Ranchi</span>
+      <h1 style="font-size:38px;margin:8px 0 2px">Case load</h1>
+      <p style="color:var(--color-neutral-700);font-size:14px">Signed in as Registrar, Bench II · State SSO · 22 August 2026</p>
+    </div>
+    <div style="display:flex;gap:10px">
+      <button class="btn btn-secondary" style="height:38px">Publish cause list</button>
+      <button class="btn btn-primary" style="height:38px">Open next case</button>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:26px">
+    <sc-for list="{{ officerStats }}" as="s" hint-placeholder-count="5">
+      <div class="blueprint" style="padding:16px">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <div style="font-family:var(--font-heading);font-size:32px;line-height:1">{{ s.v }}</div>
+        <div style="font-size:11px;color:var(--color-neutral-600)">{{ s.k }}</div>
+      </div>
+    </sc-for>
+  </div>
+  <div style="display:grid;grid-template-columns:1.7fr 1fr;gap:40px;margin-top:36px">
+    <div>
+      <h4 style="padding-bottom:8px;border-bottom:1px solid var(--color-divider)">Queue, oldest first</h4>
+      <table class="table" style="margin-top:6px">
+        <thead><tr><th>Case</th><th>Age</th><th>Against</th><th>Awaiting</th><th></th></tr></thead>
+        <tbody>
+          <sc-for list="{{ queue }}" as="c" hint-placeholder-count="6">
+            <tr>
+              <td style="font-family:ui-monospace,Menlo,monospace;font-size:12px">{{ c.id }}</td>
+              <td><span style="{{ c.ageStyle }}">{{ c.age }}</span></td>
+              <td style="font-size:13px">{{ c.against }}</td>
+              <td><span class="tag {{ c.tagClass }}">{{ c.awaiting }}</span></td>
+              <td style="text-align:right"><button class="btn btn-ghost" style="font-size:12px">Open file</button></td>
+            </tr>
+          </sc-for>
+        </tbody>
+      </table>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:18px">
+      <div class="blueprint" style="padding:18px">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <h5>Compliance watch</h5>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-top:10px;font-size:13px">
+          <div style="display:flex;justify-content:space-between;gap:10px"><span>Quarterly reports overdue</span><strong style="font-family:var(--font-heading)">37 projects</strong></div>
+          <div style="display:flex;justify-content:space-between;gap:10px"><span>Registrations expiring in 90 days</span><strong style="font-family:var(--font-heading)">21</strong></div>
+          <div style="display:flex;justify-content:space-between;gap:10px"><span>Designated account shortfall flagged</span><strong style="font-family:var(--font-heading)">4</strong></div>
+          <div style="display:flex;justify-content:space-between;gap:10px"><span>Orders pending upload</span><strong style="font-family:var(--font-heading)">2</strong></div>
+        </div>
+        <button class="btn btn-secondary btn-block">Issue show-cause notices</button>
+      </div>
+      <div class="blueprint" style="padding:18px">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <h5>Disposal against the 60-day norm</h5>
+        <div style="display:flex;align-items:flex-end;gap:6px;height:110px;margin-top:12px">
+          <sc-for list="{{ bars }}" as="b" hint-placeholder-count="6">
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px">
+              <div style="{{ b.style }}"></div>
+              <span style="font-size:10px;color:var(--color-neutral-600)">{{ b.label }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="font-size:12px;color:var(--color-neutral-600);margin-top:8px">Median days to disposal, last six months. The dotted line is the statutory 60-day expectation.</div>
+      </div>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+</main>
+
+<footer style="border-top:1px solid var(--color-divider);background:var(--color-surface);margin-top:auto">
+  <div aria-hidden="true" style="opacity:.45;line-height:0;border-bottom:1px solid var(--color-divider)">
+    <svg width="100%" height="20" role="presentation" style="display:block">
+    <defs>
+      <pattern id="jsohraiB" width="72" height="20" patternUnits="userSpaceOnUse">
+        <g fill="none" stroke="var(--color-accent)" strokeWidth="1">
+          <path d="M36 3 L45 10 L36 17 L27 10 Z"></path>
+          <path d="M36 7.5 L38.5 10 L36 12.5 L33.5 10 Z"></path>
+          <path d="M0 4 L8 10 L0 16"></path>
+          <path d="M72 4 L64 10 L72 16"></path>
+          <path d="M13 6 V14 M17 6 V14 M21 6 V14 M51 6 V14 M55 6 V14 M59 6 V14"></path>
+        </g>
+      </pattern>
+    </defs>
+    <rect width="100%" height="20" fill="url(#jsohraiB)"></rect>
+  </svg>
+  </div>
+  <div style="max-width:1180px;margin:0 auto;padding:36px 24px 20px;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px">
+    <div>
+      <div style="font-family:var(--font-heading);font-weight:600;font-size:17px">Jharkhand Real Estate Regulatory Authority</div>
+      <p style="font-size:12px;color:var(--color-neutral-700);margin-top:8px;max-width:36ch">3rd Floor, Nepal House, Doranda, Ranchi – 834002, Jharkhand. Helpline 0651-2200-XXX.</p>
+      <div style="display:flex;gap:10px;align-items:center;margin-top:12px">
+        <img src="./assets/official/india-gov.jpg" alt="Government of India" title="Government of India" style="width:34px;height:34px;object-fit:contain;border:1px solid var(--color-divider)">
+        <img src="./assets/official/digital-india.jpg" alt="Digital India" title="Digital India" style="width:34px;height:34px;object-fit:contain;border:1px solid var(--color-divider)">
+        <img src="./assets/official/jharkhand-portal.jpg" alt="Jharkhand State Portal" title="Jharkhand State Portal" style="width:34px;height:34px;object-fit:contain;border:1px solid var(--color-divider)">
+      </div>
+    </div>
+    <div>
+      <h6>Citizens</h6>
+      <div style="display:flex;flex-direction:column;gap:6px;font-size:13px">
+        <a class="jl" href="#jmain">Find a project</a><a class="jl" href="#jmain">File a complaint</a><a class="jl" href="#jmain">Track a complaint</a><a class="jl" href="#jmain">Fees payable</a>
+      </div>
+    </div>
+    <div>
+      <h6>Authority</h6>
+      <div style="display:flex;flex-direction:column;gap:6px;font-size:13px">
+        <a class="jl" href="#jmain">Acts &amp; Rules</a><a class="jl" href="#jmain">Orders &amp; judgments</a><a class="jl" href="#jmain">Right to Information</a><a class="jl" href="#jmain">Tenders</a>
+      </div>
+    </div>
+    <div>
+      <h6>Help</h6>
+      <div style="display:flex;flex-direction:column;gap:6px;font-size:13px">
+        <a class="jl" href="#jmain">Accessibility statement</a><a class="jl" href="#jmain">Grievance redressal</a><a class="jl" href="#jmain">Sitemap</a><a class="jl" href="#jmain">Terms &amp; privacy</a>
+      </div>
+    </div>
+  </div>
+  <div style="max-width:1180px;margin:0 auto;padding:12px 24px 32px;border-top:1px solid var(--color-divider);display:flex;flex-wrap:wrap;gap:18px;font-size:11px;color:var(--color-neutral-600)">
+    <span>Content owned and maintained by the Jharkhand Real Estate Regulatory Authority.</span>
+    <span>Conforms to WCAG 2.1 Level AA and GIGW 3.0.</span>
+    <span style="margin-left:auto">Last updated: 21 August 2026</span>
+    <span>Visitors: 41,20,873</span>
+  </div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;accentTheme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Sal forest&quot;,&quot;Jharkhand tricolour&quot;,&quot;Steel (system default)&quot;,&quot;Laterite earth&quot;],&quot;default&quot;:&quot;Sal forest&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Theme&quot;},&quot;language&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;English&quot;,&quot;Hindi&quot;],&quot;default&quot;:&quot;English&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Accessibility&quot;},&quot;plainLanguage&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Accessibility&quot;},&quot;darkMode&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Accessibility&quot;}}">
+const PROJECTS = [
+  { id:'p1', name:'Vaishali Heights', promoter:'Manglam Build-Developers Ltd.', promoterAddr:'Main Road, Ranchi – 834001', promoterOther:'3 registered, 1 completed',
+    district:'Ranchi', locality:'Kanke Road', reg:'JHARERA/P/RAN/2023/000412', status:'Registered', type:'Apartments', units:180, sold:124, pct:68,
+    possession:'Dec 2027', launch:'Mar 2023', complaints:1, validity:'Valid till 31 Dec 2027',
+    verdict:'Registered and current', verdictNote:'This project is on the Authority\u2019s register and its registration has not expired. The promoter may legally advertise and sell units here.' },
+  { id:'p2', name:'Green Acres Enclave', promoter:'Srijan Realty Pvt. Ltd.', promoterAddr:'Saraidhela, Dhanbad – 826004', promoterOther:'2 registered',
+    district:'Dhanbad', locality:'Saraidhela', reg:'JHARERA/P/DHN/2022/000287', status:'Registered', type:'Apartments', units:224, sold:210, pct:92,
+    possession:'Mar 2027', launch:'Aug 2022', complaints:0, validity:'Valid till 31 Mar 2027',
+    verdict:'Registered and current', verdictNote:'On the register, no adverse orders. 92% built and reporting on schedule.' },
+  { id:'p3', name:'Steel City Residency', promoter:'Adityapur Homes Pvt. Ltd.', promoterAddr:'Sonari, Jamshedpur – 831011', promoterOther:'1 registered',
+    district:'Jamshedpur', locality:'Sonari', reg:'JHARERA/P/JAM/2024/000531', status:'Registered', type:'Apartments', units:96, sold:38, pct:31,
+    possession:'Jun 2029', launch:'Jan 2024', complaints:0, validity:'Valid till 30 Jun 2029',
+    verdict:'Registered and current', verdictNote:'Early-stage project. Registration is valid; construction is 31% complete against a 2029 possession date.' },
+  { id:'p4', name:'Bokaro Sunrise Apartments', promoter:'Ambey Constructions', promoterAddr:'Sector 4, Bokaro Steel City – 827004', promoterOther:'1 registered, 1 lapsed',
+    district:'Bokaro', locality:'Sector 4', reg:'JHARERA/P/BOK/2021/000164', status:'Lapsed', type:'Apartments', units:120, sold:97, pct:74,
+    possession:'Overdue since Dec 2025', launch:'Feb 2021', complaints:6, validity:'Expired 30 Jun 2025',
+    verdict:'Registration has lapsed', verdictNote:'The registration expired on 30 June 2025 and no extension has been granted. The promoter cannot legally market or sell units until it is revived. Existing buyers may claim interest for delay under Section 18.' },
+  { id:'p5', name:'Deoghar Divine Residency', promoter:'Shreeji Infra LLP', promoterAddr:'Castairs Town, Deoghar – 814112', promoterOther:'First project',
+    district:'Deoghar', locality:'Castairs Town', reg:'JHARERA/P/DEO/2024/000618', status:'Registered', type:'Plotted development', units:64, sold:9, pct:12,
+    possession:'Dec 2028', launch:'Nov 2024', complaints:0, validity:'Valid till 31 Dec 2028',
+    verdict:'Registered and current', verdictNote:'Newly registered plotted development. Check that layout approval is on file before paying any booking amount.' },
+  { id:'p6', name:'Hazaribagh Meadows', promoter:'Lakhotia Developers Pvt. Ltd.', promoterAddr:'Korrah, Hazaribagh – 825301', promoterOther:'2 registered, 1 suspended',
+    district:'Hazaribagh', locality:'Korrah', reg:'JHARERA/P/HAZ/2023/000455', status:'Suspended', type:'Villas', units:48, sold:31, pct:44,
+    possession:'Overdue since Mar 2026', launch:'May 2023', complaints:11, validity:'Suspended by order dated 14 Apr 2026',
+    verdict:'Registration suspended \u2014 do not pay',
+    verdictNote:'The Authority suspended this registration on 14 April 2026 for failure to file quarterly reports and diversion of buyer funds. Do not make any further payment. Existing buyers should read order JHRERA/O/2026/0117.' }
+];
+const DOCS = [
+  { name:'Approved layout plan', plain:'the map the municipality approved', filed:'14 Mar 2023', status:'On file', tagClass:'tag-accent' },
+  { name:'Commencement certificate', plain:'permission to start building', filed:'22 Mar 2023', status:'On file', tagClass:'tag-accent' },
+  { name:'Encumbrance certificate', plain:'proof the land carries no loan or dispute', filed:'14 Mar 2023', status:'On file', tagClass:'tag-accent' },
+  { name:'Form 3 \u2014 engineer\u2019s certificate', plain:'an engineer confirming how much is built', filed:'12 Jul 2026', status:'Current quarter', tagClass:'tag-accent' },
+  { name:'Occupancy certificate', plain:'permission for buyers to move in', filed:'Not yet due', status:'Pending', tagClass:'tag-neutral' }
+];
+const NOTICES = [
+  { date:'18 Aug 2026', title:'Quarterly progress reports for Apr\u2013Jun 2026 due by 31 August; late filing attracts penalty under Section 61', kind:'Circular' },
+  { date:'11 Aug 2026', title:'Cause list for hearings from 25 to 29 August 2026 published', kind:'Cause list' },
+  { date:'04 Aug 2026', title:'Registration of Hazaribagh Meadows suspended; buyers advised to withhold further payment', kind:'Public notice' },
+  { date:'29 Jul 2026', title:'Revised fee schedule for project registration and extension, effective 1 September 2026', kind:'Notification' },
+  { date:'21 Jul 2026', title:'Agent registration renewals may now be filed entirely online', kind:'Circular' }
+];
+const LEADERSHIP = [
+  { name:'Mr. Sunil Kumar', role:'Principal Secretary, Department of Urban Development and Housing', photo:'./assets/official/leadership/sunil-kumar.jpg' },
+  { name:'Shri Ajay Kumar Singh', role:'Chairman, JharERA', photo:'./assets/official/leadership/ajay-kumar-singh.jpg' },
+  { name:'Shri Nalin Kumar', role:'Member, JharERA', photo:'./assets/official/leadership/nalin-kumar.jpg' }
+];
+
+const AGENTS = [
+  { name:'Rakesh Kumar Singh', firm:'Singh Properties, Ranchi', reg:'JHARERA/A/RAN/2022/001871', district:'Ranchi', till:'31 Mar 2027', status:'Registered', complaints:'0' },
+  { name:'Nirmala Prasad', firm:'Nirmala Realty Services', reg:'JHARERA/A/DHN/2023/002140', district:'Dhanbad', till:'30 Sep 2028', status:'Registered', complaints:'0' },
+  { name:'Imtiyaz Ahmed', firm:'Steel City Estates', reg:'JHARERA/A/JAM/2021/001402', district:'Jamshedpur', till:'Expired 31 Dec 2025', status:'Lapsed', complaints:'2' },
+  { name:'Pawan Mahto', firm:'Mahto Associates', reg:'JHARERA/A/BOK/2024/002655', district:'Bokaro', till:'31 Jul 2029', status:'Registered', complaints:'0' },
+  { name:'Sanjay Kesri', firm:'Deoghar Land Advisors', reg:'JHARERA/A/DEO/2023/002011', district:'Deoghar', till:'Suspended 12 May 2026', status:'Suspended', complaints:'5' }
+];
+const ORDERS = [
+  { no:'JHRERA/O/2026/0117', section:'Section 7 — revocation', date:'14 Apr 2026', bench:'Full Bench', parties:'In re: Hazaribagh Meadows, Lakhotia Developers Pvt. Ltd.',
+    headnote:'Registration suspended for failure to file four consecutive quarterly reports and for withdrawal from the designated account without engineer and chartered-accountant certification. The promoter is restrained from accepting further payments; buyers already in occupation are protected.' },
+  { no:'JHRERA/O/2026/0092', section:'Section 18 — delay', date:'02 Mar 2026', bench:'Bench II, Ranchi', parties:'Sunita Devi v. Ambey Constructions',
+    headnote:'Possession delayed by fourteen months beyond the agreement date. Promoter directed to pay interest at the State Bank of India marginal cost of funds rate plus two percent for the period of delay, and to hand over possession within ninety days.' },
+  { no:'JHRERA/O/2025/0416', section:'Section 12 — false advertising', date:'19 Nov 2025', bench:'Bench I, Ranchi', parties:'Ashok Mahto v. Srijan Realty Pvt. Ltd.',
+    headnote:'Brochure promised a clubhouse and swimming pool absent from the sanctioned plan. Refund of the entire amount paid with interest allowed, together with costs of ₹25,000.' },
+  { no:'JHRERA/O/2025/0388', section:'Section 11 — disclosure', date:'07 Oct 2025', bench:'Full Bench', parties:'Suo motu: 62 promoters, non-filing of quarterly reports',
+    headnote:'Penalty of ₹50,000 per quarter imposed on promoters who failed to upload quarterly progress reports. The Authority directs that non-filing beyond two quarters will attract proceedings for revocation.' }
+];
+const LAWS = [
+  { kind:'Central Act', title:'Real Estate (Regulation and Development) Act, 2016', note:'The parent law. Ninety-two sections covering registration, buyer rights, the Authority and the Appellate Tribunal.' },
+  { kind:'State Rules', title:'Jharkhand Real Estate (Regulation and Development) Rules, 2017', note:'How the Act is applied in Jharkhand: forms, fees, timelines and the interest rate payable on delay.' },
+  { kind:'Regulations', title:'JharERA (General) Regulations, 2018', note:'Procedure before the Authority — filing, service of notice, hearings, adjournments and orders.' },
+  { kind:'Plain guide', title:'A homebuyer\u2019s guide to RERA', note:'Twelve pages, no legal language, in Hindi and English. What to check before booking and what to do when things go wrong.' },
+  { kind:'Plain guide', title:'A promoter\u2019s compliance calendar', note:'Every filing a registered promoter owes the Authority, month by month, with the penalty for missing it.' },
+  { kind:'Notification', title:'Fee schedule, effective 1 September 2026', note:'Registration, extension, agent registration, complaint and appeal fees in one table.' }
+];
+const FORMS = [
+  { name:'Form A', purpose:'Application for project registration', who:'Promoter', fee:'By plot area' },
+  { name:'Form B', purpose:'Declaration on stamp paper', who:'Promoter', fee:'Nil' },
+  { name:'Form G', purpose:'Application for agent registration', who:'Agent', fee:'₹10,000 individual' },
+  { name:'Form M', purpose:'Complaint to the Authority', who:'Buyer, promoter or agent', fee:'₹1,000' },
+  { name:'Form N', purpose:'Appeal to the Appellate Tribunal', who:'Any aggrieved party', fee:'₹5,000' }
+];
+const TIMELINE = [
+  { date:'02 Feb 2026', title:'Complaint filed', body:'Received online with the booking agreement and eleven payment receipts. Fee of ₹1,000 paid.', doc:'Acknowledgement JH/CMP/2026/00418' },
+  { date:'09 Feb 2026', title:'Papers checked and case admitted', body:'The registry found the complaint complete. Nothing further was required from you.', doc:'' },
+  { date:'21 Feb 2026', title:'Notice issued to Ambey Constructions', body:'The promoter was given thirty days to file a reply.', doc:'Notice dated 21 Feb 2026' },
+  { date:'14 Apr 2026', title:'Promoter filed a reply', body:'The promoter admitted the delay and attributed it to a sand shortage and a labour strike. A copy was sent to you by email.', doc:'Reply of the promoter' },
+  { date:'12 Jun 2026', title:'First hearing held', body:'Both sides were heard. The bench directed the promoter to produce the designated-account statement for the last two years.', doc:'Order sheet, 12 Jun 2026' },
+  { date:'27 Aug 2026', title:'Next hearing — arguments on relief', body:'The bench will hear what relief you are entitled to. You may attend in person at Nepal House or join the video link.', doc:'' }
+];
+const QUEUE = [
+  { id:'JH/CMP/2025/02914', age:'318 days', against:'Lakhotia Developers', awaiting:'Order to be written', tag:'tag-outline' },
+  { id:'JH/CMP/2026/00418', age:'201 days', against:'Ambey Constructions', awaiting:'Hearing 27 Aug', tag:'tag-accent' },
+  { id:'JH/CMP/2026/00502', age:'174 days', against:'Ambey Constructions', awaiting:'Promoter reply overdue', tag:'tag-outline' },
+  { id:'JH/CMP/2026/00611', age:'88 days', against:'Shreeji Infra LLP', awaiting:'Scrutiny', tag:'tag-neutral' },
+  { id:'JH/CMP/2026/00688', age:'34 days', against:'Manglam Build-Developers', awaiting:'Notice to issue', tag:'tag-neutral' },
+  { id:'JH/CMP/2026/00711', age:'Today', against:'Ambey Constructions', awaiting:'Scrutiny', tag:'tag-neutral' }
+];
+
+// Accent retints. The system is mono — one accent role — so a theme changes that
+// single role's ramp and nothing else. Tones taken from Jharkhand's own ground:
+// sal forest, laterite soil, and the system's original steel.
+// Accent retints. The system is mono — one accent role — so a theme changes that
+// single role's ramp and nothing else. Tones taken from Jharkhand's own ground:
+// sal forest, laterite soil, and the system's original steel.
+const THEMES = {
+  'Jharkhand tricolour': {
+    light: { '--color-accent': '#c9791f', '--color-accent-100': '#fff3df', '--color-accent-300': '#f1c58a', '--color-accent-600': '#a95e15', '--color-accent-700': '#7d4210', '--color-accent-800': '#542d0e', '--color-accent-900': '#123d2a', '--color-jh-blue': '#1878ac' },
+    dark: { '--color-accent': '#edb66f', '--color-accent-100': '#342719', '--color-accent-700': '#f1c58a', '--color-accent-800': '#ffe4bf', '--color-accent-900': '#0d2a1d', '--color-jh-blue': '#2d9dce' }
+  },
+  'Steel (system default)': {
+    light: { '--color-accent': '#5980a6', '--color-accent-100': '#eef6ff', '--color-accent-300': '#b5d9fd', '--color-accent-600': '#597ea3', '--color-accent-700': '#416180', '--color-accent-800': '#2c455d', '--color-accent-900': '#1d2d3d' },
+    dark: { '--color-accent': '#94bce3', '--color-accent-100': '#20303d', '--color-accent-700': '#b5d9fd', '--color-accent-800': '#d6ebff', '--color-accent-900': '#0f1519' }
+  },
+  'Sal forest': {
+    light: { '--color-accent': '#2f6b3b', '--color-accent-100': '#e9f3e9', '--color-accent-300': '#a9cba9', '--color-accent-600': '#245c31', '--color-accent-700': '#174523', '--color-accent-800': '#10351a', '--color-accent-900': '#0c2b14', '--color-jh-blue': '#1878ac' },
+    dark: { '--color-accent': '#8fbd98', '--color-accent-100': '#1f2e22', '--color-accent-700': '#b6d3bb', '--color-accent-800': '#d8e8db', '--color-accent-900': '#081e0d', '--color-jh-blue': '#2d9dce' }
+  },
+  'Laterite earth': {
+    light: { '--color-accent': '#9a6448', '--color-accent-100': '#fbf1ec', '--color-accent-300': '#e2bfab', '--color-accent-600': '#85543c', '--color-accent-700': '#67412e', '--color-accent-800': '#4a2f21', '--color-accent-900': '#301d14' },
+    dark: { '--color-accent': '#d3a288', '--color-accent-100': '#31221a', '--color-accent-700': '#e2bfab', '--color-accent-800': '#f2ded3', '--color-accent-900': '#1a110c' }
+  }
+};
+
+// Lightweight React-compatible client-side routing. It follows HashRouter
+// semantics so every portal view has a shareable URL on a plain static host,
+// while keeping this standalone mock free of a build step.
+const ROUTE_PATHS = {
+  home: '/', search: '/projects', agents: '/agents', complaint: '/complaints/new',
+  track: '/complaints/track', promoter: '/promoter', login: '/sign-in',
+  dash: '/dashboard', orders: '/orders', acts: '/acts-rules', officer: '/officer'
+};
+function stateForLocation() {
+  if (typeof window === 'undefined') return { route: 'home' };
+  const hash = window.location.hash;
+  if (hash && !hash.startsWith('#/')) return null;
+  const path = (hash.startsWith('#/') ? hash.slice(1) : '/').replace(/\/+$/, '') || '/';
+  const project = path.match(/^\/projects\/([^/]+)$/);
+  if (project) return { route: 'project', projId: decodeURIComponent(project[1]) };
+  const entry = Object.entries(ROUTE_PATHS).find(([, value]) => value === path);
+  return { route: entry ? entry[0] : 'home' };
+}
+function pathFor(route, projectId) {
+  const path = route === 'project' ? '/projects/' + encodeURIComponent(projectId) : (ROUTE_PATHS[route] || '/');
+  return '#' + path;
+}
+
+class Component extends DCLogic {
+  state = {
+    route: 'home', lang: 'en', dark: false, scale: 1, simple: true, theme: 'Sal forest',
+    q: '', district: 'All districts', status: 'Any status', ptype: 'All types', projId: 'p1',
+    cStep: 1, cGround: 'delay', cProject: 'Bokaro Sunrise Apartments',
+    caseQ: 'JH/CMP/2026/00418', tracked: true, agentQ: '', orderQ: '', role: 'citizen'
+  };
+  componentDidMount() {
+    const p = this.props;
+    const locationState = stateForLocation();
+    this.setState({
+      ...(locationState || {}),
+      lang: p.language === 'Hindi' ? 'hi' : 'en',
+      dark: !!p.darkMode,
+      simple: p.plainLanguage !== false,
+      theme: THEMES[p.accentTheme] ? p.accentTheme : 'Sal forest'
+    });
+    this.onRouteChange = () => {
+      const nextRoute = stateForLocation();
+      if (nextRoute) this.setState(nextRoute);
+    };
+    window.addEventListener('hashchange', this.onRouteChange);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('hashchange', this.onRouteChange);
+  }
+  navigate = (route, projId) => {
+    const next = { route, ...(projId ? { projId } : {}) };
+    if (typeof window !== 'undefined') {
+      const url = pathFor(route, projId || this.state.projId);
+      if (window.location.hash !== url) window.location.hash = url;
+      window.scrollTo(0, 0);
+    }
+    this.setState(next);
+  };
+  go = (route) => () => this.navigate(route);
+  openProj = (id) => () => this.navigate('project', id);
+
+  tag(status) {
+    if (status === 'Registered') return 'tag-accent';
+    if (status === 'Lapsed') return 'tag-neutral';
+    return 'tag-outline';
+  }
+  filtered() {
+    const { q, district, status, ptype } = this.state;
+    const needle = q.trim().toLowerCase();
+    return PROJECTS.filter(p => {
+      if (needle && !(p.name + ' ' + p.promoter + ' ' + p.reg + ' ' + p.district + ' ' + p.locality).toLowerCase().includes(needle)) return false;
+      if (district !== 'All districts' && p.district !== district) return false;
+      if (status !== 'Any status' && p.status !== status) return false;
+      if (ptype !== 'All types' && p.type !== ptype) return false;
+      return true;
+    });
+  }
+  decorate(p) {
+    return Object.assign({}, p, { tagClass: this.tag(p.status), open: this.openProj(p.id) });
+  }
+
+  renderVals() {
+    const s = this.state;
+    const dark = s.dark;
+    const navBase = { background: 'none', border: 0, borderBottomWidth: '2px', borderBottomStyle: 'solid', borderBottomColor: 'transparent', padding: '11px 0', cursor: 'pointer', font: 'inherit', color: 'inherit', whiteSpace: 'nowrap', flex: 'none' };
+    const navOn = Object.assign({}, navBase, { borderBottomColor: 'var(--color-accent)', color: 'var(--color-accent-700)' });
+    const nav = (r) => (s.route === r ? navOn : navBase);
+    const utilBtn = (on) => ({ background: on ? '#eef6ff' : 'none', color: on ? '#1d2d3d' : '#eef6ff', border: '1px solid rgba(238,246,255,.35)', padding: '2px 9px', height: '22px', cursor: 'pointer', fontSize: '11px', fontFamily: 'var(--font-heading)', letterSpacing: '.04em' });
+    const proj = PROJECTS.find(p => p.id === s.projId) || PROJECTS[0];
+    const bad = proj.status !== 'Registered';
+    const results = this.filtered();
+    const taskStyle = { display: 'flex', justifyContent: 'space-between', gap: '14px', alignItems: 'center', background: 'none', border: 0, borderBottom: '1px solid var(--color-divider)', padding: '11px 0', cursor: 'pointer', font: 'inherit', fontSize: '14px', color: 'inherit', textAlign: 'left', width: '100%' };
+    const pctToday = 100 * (proj.pct / 100) * 0.95 + 2;
+    const forestUi = s.theme === 'Sal forest' ? {
+      '--color-bg': '#f4f9f2', '--color-surface': '#eaf4e7', '--color-text': '#132a18',
+      '--color-divider': '#c5dac4', '--color-neutral-100': '#e6f0e3', '--color-neutral-300': '#cfdfcd',
+      '--color-neutral-600': '#5e7661', '--color-neutral-700': '#37533c', '--color-neutral-800': '#203b26'
+    } : {};
+
+    return {
+      rootStyle: Object.assign({
+        minHeight: '100vh', display: 'flex', flexDirection: 'column',
+        fontFamily: 'var(--font-body)', zoom: s.scale,
+        background: 'var(--color-bg)', color: 'var(--color-text)'
+      }, (THEMES[s.theme] || THEMES['Sal forest']).light, forestUi, dark ? Object.assign({
+        '--color-bg': '#15181a', '--color-surface': '#1d2124', '--color-text': '#eef1f4',
+        '--color-divider': 'rgba(238,241,244,.22)',
+        '--color-neutral-100': '#232629', '--color-neutral-300': '#3a3e42',
+        '--color-neutral-600': '#a8adb2', '--color-neutral-700': '#c3c8cd', '--color-neutral-800': '#e2e6ea'
+      }, (THEMES[s.theme] || THEMES['Sal forest']).dark) : {}),
+      themeName: s.theme,
+      themeOptions: Object.keys(THEMES).map(name => ({
+        name, pick: () => this.setState({ theme: name }),
+        style: { width: '16px', height: '16px', padding: 0, cursor: 'pointer', background: THEMES[name].light['--color-accent'], border: s.theme === name ? '2px solid #eef6ff' : '1px solid rgba(238,246,255,.4)' }
+      })),
+      sEn: s.lang === 'hi' ? { display: 'none' } : {},
+      sHi: s.lang === 'hi' ? {} : { display: 'none' },
+      jargonStyle: s.simple ? { color: 'var(--color-neutral-600)', fontSize: '12px' } : { display: 'none' },
+      enBtnStyle: utilBtn(s.lang === 'en'), hiBtnStyle: utilBtn(s.lang === 'hi'),
+      simpleBtnStyle: utilBtn(s.simple),
+      setEn: () => this.setState({ lang: 'en' }), setHi: () => this.setState({ lang: 'hi' }),
+      toggleDark: () => this.setState(st => ({ dark: !st.dark })),
+      toggleSimple: () => this.setState(st => ({ simple: !st.simple })),
+      fontUp: () => this.setState(st => ({ scale: Math.min(1.3, +(st.scale + 0.1).toFixed(2)) })),
+      fontDown: () => this.setState(st => ({ scale: Math.max(0.85, +(st.scale - 0.1).toFixed(2)) })),
+      fontReset: () => this.setState({ scale: 1 }),
+
+      goHome: this.go('home'), goSearch: this.go('search'), goAgents: this.go('agents'),
+      goComplaint: this.go('complaint'), goOrders: this.go('orders'), goActs: this.go('acts'),
+      goPromoter: this.go('promoter'), goOfficer: this.go('officer'), goTrack: this.go('track'), goLogin: this.go('login'),
+      navHome: nav('home'), navSearch: nav('search'), navAgents: nav('agents'), navComplaint: nav('complaint'),
+      navOrders: nav('orders'), navActs: nav('acts'), navPromoter: nav('promoter'), navOfficer: nav('officer'),
+
+      isHome: s.route === 'home', isSearch: s.route === 'search', isProject: s.route === 'project',
+
+      q: s.q, onQ: (e) => this.setState({ q: e.target.value }),
+      district: s.district, status: s.status, ptype: s.ptype,
+      onDistrict: (e) => this.setState({ district: e.target.value }),
+      onStatus: (e) => this.setState({ status: e.target.value }),
+      onType: (e) => this.setState({ ptype: e.target.value }),
+      districts: ['All districts', 'Ranchi', 'Dhanbad', 'Jamshedpur', 'Bokaro', 'Deoghar', 'Hazaribagh'],
+      statuses: ['Any status', 'Registered', 'Lapsed', 'Suspended'],
+      types: ['All types', 'Apartments', 'Plotted development', 'Villas'],
+      clearFilters: () => this.setState({ q: '', district: 'All districts', status: 'Any status', ptype: 'All types' }),
+      results: results.map(p => this.decorate(p)),
+      resultCount: results.length + (results.length === 1 ? ' project matches' : ' projects match'),
+      noResults: results.length === 0,
+      recent: PROJECTS.slice(0, 3).map(p => Object.assign(this.decorate(p), {
+        cardStyle: { padding: '18px 20px', display: 'flex', flexDirection: 'column', textAlign: 'left', background: 'none', cursor: 'pointer', font: 'inherit', color: 'inherit' }
+      })),
+      notices: NOTICES,
+      leadership: LEADERSHIP,
+      taskStyle: taskStyle,
+      taskStyleLast: Object.assign({}, taskStyle, { borderBottom: 0 }),
+      tryA: () => this.setState({ q: 'Vaishali', route: 'search' }),
+      tryB: () => this.setState({ q: 'Bokaro', route: 'search' }),
+      tryC: () => this.setState({ q: 'Hazaribagh', route: 'search' }),
+
+      verdictStyle: {
+        padding: '26px 28px', display: 'flex', gap: '30px', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap',
+        background: bad ? 'var(--color-accent-900)' : 'var(--color-accent)', color: '#f2f2f3',
+        borderColor: bad ? 'var(--color-accent-900)' : 'var(--color-accent)'
+      },
+      proj: Object.assign({}, proj, {
+        timelineNote: bad ? 'Behind the declared timeline' : 'On the declared timeline',
+        barStyle: { position: 'absolute', inset: '0 auto 0 0', width: proj.pct + '%', background: 'var(--color-accent)', opacity: 0.85 },
+        markStyle: { position: 'absolute', top: '-4px', bottom: '-4px', left: pctToday + '%', width: '2px', background: 'var(--color-text)' },
+        docs: DOCS,
+        cases: proj.complaints ? [
+          { id: 'JH/CMP/2026/00418', filed: '02 Feb 2026', issue: 'Possession delayed beyond agreement date', stage: 'Hearing fixed' },
+          { id: 'JH/CMP/2025/03310', filed: '19 Nov 2025', issue: 'Common area handed over incomplete', stage: 'Disposed' }
+        ].slice(0, Math.min(2, proj.complaints)) : [],
+        checks: [
+          { mark: bad ? '!' : '\u2713', text: bad ? 'Registration is not current — do not pay' : 'Registration is current on the register', markStyle: { color: bad ? 'var(--color-accent-700)' : 'var(--color-accent-700)', fontWeight: 700, width: '14px', flex: 'none' } },
+          { mark: '\u2713', text: 'Approved layout plan is on file', markStyle: { color: 'var(--color-accent-700)', fontWeight: 700, width: '14px', flex: 'none' } },
+          { mark: proj.pct > 60 ? '\u2713' : '\u2013', text: 'Quarterly progress reports filed for the last four quarters', markStyle: { color: 'var(--color-neutral-600)', fontWeight: 700, width: '14px', flex: 'none' } },
+          { mark: '\u2013', text: 'Occupancy certificate not yet issued — possession cannot be given before it', markStyle: { color: 'var(--color-neutral-600)', fontWeight: 700, width: '14px', flex: 'none' } }
+        ]
+      }),
+
+      isComplaint: s.route === 'complaint', isTrack: s.route === 'track', isPromoter: s.route === 'promoter',
+      isLogin: s.route === 'login', isDash: s.route === 'dash', isAgents: s.route === 'agents',
+      isOrders: s.route === 'orders', isActs: s.route === 'acts', isOfficer: s.route === 'officer',
+
+      steps: [
+        { n: '1', label: 'Right place?' }, { n: '2', label: 'What happened' },
+        { n: '3', label: 'Documents' }, { n: '4', label: 'Review and pay' }
+      ].map((st, i) => {
+        const n = i + 1, done = s.cStep > n, on = s.cStep === n;
+        return Object.assign({}, st, { style: {
+          flex: 1, padding: '11px 14px', borderRight: i < 3 ? '1px solid var(--color-divider)' : 0,
+          background: on ? 'var(--color-accent)' : 'transparent',
+          color: on ? '#f2f2f3' : (done ? 'var(--color-text)' : 'var(--color-neutral-600)')
+        } });
+      }),
+      step1: s.cStep === 1, step2: s.cStep === 2, step3: s.cStep === 3, step4: s.cStep === 4, stepDone: s.cStep === 5,
+      nextLabel: s.cStep === 3 ? 'Review my complaint' : 'Continue',
+      wizardNavStyle: { display: s.cStep >= 4 ? 'none' : 'flex', gap: '12px', alignItems: 'center', marginTop: '24px' },
+      nextStep: () => this.setState(st => ({ cStep: Math.min(4, st.cStep + 1) })),
+      prevStep: () => this.setState(st => ({ cStep: Math.max(1, st.cStep - 1) })),
+      submitComplaint: () => this.setState({ cStep: 5 }),
+      grounds: [
+        { key: 'delay', title: 'Possession is late', note: 'The date in my agreement has passed' },
+        { key: 'refund', title: 'I want my money back', note: 'I no longer want the unit and the promoter will not refund' },
+        { key: 'changed', title: 'The project changed', note: 'Layout, area or amenities are not what was promised' },
+        { key: 'charges', title: 'Extra charges demanded', note: 'Amounts not in my agreement are being asked for' },
+        { key: 'unreg', title: 'The project is not registered', note: 'It is being sold without a registration number' }
+      ].map(g => ({
+        title: g.title, note: g.note, pick: () => this.setState({ cGround: g.key }),
+        style: { display: 'flex', gap: '11px', alignItems: 'flex-start', textAlign: 'left', width: '100%', cursor: 'pointer', font: 'inherit', color: 'inherit', padding: '11px 13px', background: s.cGround === g.key ? 'var(--color-accent-100)' : 'transparent', border: '1px solid ' + (s.cGround === g.key ? 'var(--color-accent)' : 'var(--color-divider)') },
+        dotStyle: { width: '14px', height: '14px', borderRadius: '50%', flex: 'none', marginTop: '4px', border: '1.5px solid ' + (s.cGround === g.key ? 'var(--color-accent)' : 'var(--color-divider)'), background: s.cGround === g.key ? 'var(--color-accent)' : 'transparent', boxShadow: s.cGround === g.key ? 'inset 0 0 0 3px var(--color-bg)' : 'none' }
+      })),
+      cProject: s.cProject, onCProject: (e) => this.setState({ cProject: e.target.value }),
+      projectMatchNote: (() => {
+        const m = PROJECTS.find(p => p.name.toLowerCase().includes(s.cProject.trim().toLowerCase()) && s.cProject.trim());
+        return m ? 'Matched ' + m.name + ' — ' + m.reg + ' (' + m.status + ')' : 'No registered project matches that name yet. You can still file — say so in the next step.';
+      })(),
+      eligTitle: s.cGround === 'unreg' ? 'File this as a complaint against an unregistered project' : 'Yes — the Authority can decide this',
+      eligNote: s.cGround === 'unreg'
+        ? 'Selling an unregistered project is an offence under Section 3. The Authority will act on your information and may impose a penalty of up to ten percent of the project cost.'
+        : 'Your problem falls under Section ' + (s.cGround === 'delay' ? '18' : s.cGround === 'changed' ? '14' : s.cGround === 'refund' ? '18' : '11') + ' of the Act. The filing fee is ₹1,000 and a lawyer is not required.',
+      eligStyle: { padding: '16px 18px', marginTop: '16px', background: 'var(--color-accent-100)', borderColor: 'var(--color-accent)' },
+      uploads: [
+        { name: 'Booking agreement or allotment letter', need: 'Required', tagClass: 'tag-outline', hint: 'The paper that shows you booked a unit and on what terms' },
+        { name: 'Payment receipts', need: 'Recommended', tagClass: 'tag-neutral', hint: 'Bank statements are accepted where receipts were never given' },
+        { name: 'Letters or emails to the promoter', need: 'Optional', tagClass: 'tag-neutral', hint: 'Shows you asked before coming here' },
+        { name: 'Brochure or advertisement', need: 'Optional', tagClass: 'tag-neutral', hint: 'Needed only if what was promised differs from what is being built' }
+      ],
+      review: [
+        { k: 'Complaint about', v: 'Possession is late', edit: () => this.setState({ cStep: 1 }) },
+        { k: 'Project', v: s.cProject + ' — JHARERA/P/BOK/2021/000164', edit: () => this.setState({ cStep: 1 }) },
+        { k: 'Promoter', v: 'Ambey Constructions', edit: () => this.setState({ cStep: 1 }) },
+        { k: 'Relief sought', v: 'Interest for every month of delay', edit: () => this.setState({ cStep: 2 }) },
+        { k: 'Documents attached', v: 'Booking agreement, 11 payment receipts', edit: () => this.setState({ cStep: 3 }) },
+        { k: 'Hearing bench', v: 'Bench II, Ranchi (assigned by district)', edit: () => this.setState({ cStep: 1 }) }
+      ],
+
+      caseQ: s.caseQ, onCaseQ: (e) => this.setState({ caseQ: e.target.value }),
+      doTrack: () => this.setState({ tracked: true }), tracked: s.tracked,
+      timeline: TIMELINE.map((t, i) => {
+        const future = i === TIMELINE.length - 1;
+        return Object.assign({}, t, {
+          dotStyle: { width: '11px', height: '11px', flex: 'none', borderRadius: '50%', marginTop: '5px', background: future ? 'transparent' : 'var(--color-accent)', border: '2px solid var(--color-accent)' },
+          lineStyle: { width: '1px', flex: 1, background: 'var(--color-divider)', marginTop: '3px' },
+          docStyle: t.doc ? { fontSize: '12px', marginTop: '6px', color: 'var(--color-accent-700)', textDecoration: 'underline', textUnderlineOffset: '3px', cursor: 'pointer' } : { display: 'none' }
+        });
+      }),
+
+      promoterSections: [
+        { n: '01', title: 'Promoter details', status: 'Complete', tagClass: 'tag-accent', note: 'Taken from your PAN and incorporation record — check and correct anything that has changed.', fields: [{ label: 'Legal name of the promoter', ph: 'Manglam Build-Developers Ltd.' }, { label: 'PAN', ph: 'AABCM1234K' }, { label: 'Registered office', ph: 'Main Road, Ranchi' }, { label: 'Authorised signatory', ph: 'Name and designation' }] },
+        { n: '02', title: 'The project', status: 'Complete', tagClass: 'tag-accent', note: 'Everything a buyer will later see on the public project page comes from this section, so it must match your sanctioned plan.', fields: [{ label: 'Project name', ph: 'As on the sanctioned plan' }, { label: 'District and locality', ph: 'Ranchi, Kanke Road' }, { label: 'Plot area (sq m)', ph: '12,400' }, { label: 'Number of units', ph: '180' }, { label: 'Proposed possession date', ph: 'December 2027' }, { label: 'Project type', ph: 'Apartments' }] },
+        { n: '03', title: 'Land title', status: 'Complete', tagClass: 'tag-accent', note: 'Title deed, encumbrance certificate and, where the land is held on lease or in a joint venture, the agreement.', fields: [{ label: 'Khata and plot numbers', ph: 'Khata 214, Plot 87/2' }, { label: 'Nature of title', ph: 'Freehold / leasehold / JV' }] },
+        { n: '04', title: 'Approvals and plans', status: '2 documents pending', tagClass: 'tag-outline', note: 'Upload the sanctioned plan, layout approval and commencement certificate. Scanned copies are accepted.', fields: [{ label: 'Sanctioning authority', ph: 'Ranchi Municipal Corporation' }, { label: 'Sanction number and date', ph: 'RMC/BP/2023/1142' }] },
+        { n: '05', title: 'Bank and finance', status: 'Not started', tagClass: 'tag-neutral', note: 'The designated account into which seventy percent of buyer collections must go, and the bank\u2019s confirmation.', fields: [{ label: 'Designated account number', ph: 'Separate account for this project only' }, { label: 'Bank and branch', ph: 'SBI, Doranda' }] }
+      ],
+
+      roles: [
+        { key: 'citizen', title: 'Citizen or homebuyer', note: 'Mobile number and OTP. Aadhaar only when you file.' },
+        { key: 'promoter', title: 'Promoter or developer', note: 'PAN and registered mobile' },
+        { key: 'agent', title: 'Real estate agent', note: 'Agent registration number' },
+        { key: 'officer', title: 'Authority officer', note: 'Jharkhand state single sign-on' }
+      ].map(r => ({
+        title: r.title, note: r.note, pick: () => this.setState({ role: r.key }),
+        style: { display: 'flex', gap: '11px', alignItems: 'flex-start', textAlign: 'left', width: '100%', cursor: 'pointer', font: 'inherit', color: 'inherit', padding: '13px 15px', background: s.role === r.key ? 'var(--color-accent-100)' : 'transparent', border: '1px solid ' + (s.role === r.key ? 'var(--color-accent)' : 'var(--color-divider)') },
+        dotStyle: { width: '14px', height: '14px', borderRadius: '50%', flex: 'none', marginTop: '5px', border: '1.5px solid ' + (s.role === r.key ? 'var(--color-accent)' : 'var(--color-divider)'), background: s.role === r.key ? 'var(--color-accent)' : 'transparent', boxShadow: s.role === r.key ? 'inset 0 0 0 3px var(--color-bg)' : 'none' }
+      })),
+      loginTitle: s.role === 'officer' ? 'Officer sign-in' : s.role === 'promoter' ? 'Promoter sign-in' : s.role === 'agent' ? 'Agent sign-in' : 'Citizen sign-in',
+      loginIdLabel: s.role === 'promoter' ? 'PAN of the promoter' : s.role === 'agent' ? 'Agent registration number' : s.role === 'officer' ? 'Government email' : 'Mobile number',
+      loginIdPh: s.role === 'promoter' ? 'AABCM1234K' : s.role === 'agent' ? 'JHARERA/A/RAN/2022/001871' : s.role === 'officer' ? 'name@jharkhand.gov.in' : '10 digits',
+      goDash: () => this.setState({ route: s.role === 'officer' ? 'officer' : 'dash' }),
+      dashDocs: [
+        { name: 'Acknowledgement — JH/CMP/2026/00418', date: '02 Feb 2026' },
+        { name: 'Fee receipt ₹1,000', date: '02 Feb 2026' },
+        { name: 'Order sheet, first hearing', date: '12 Jun 2026' },
+        { name: 'Order — JH/CMP/2025/03310', date: '28 Mar 2026' }
+      ],
+
+      agentQ: s.agentQ, onAgentQ: (e) => this.setState({ agentQ: e.target.value }),
+      agents: AGENTS.filter(a => !s.agentQ.trim() || (a.name + a.firm + a.reg + a.district).toLowerCase().includes(s.agentQ.trim().toLowerCase()))
+        .map(a => Object.assign({}, a, { tagClass: this.tag(a.status) })),
+      orderQ: s.orderQ, onOrderQ: (e) => this.setState({ orderQ: e.target.value }),
+      orders: ORDERS.filter(o => !s.orderQ.trim() || (o.parties + o.headnote + o.section + o.no).toLowerCase().includes(s.orderQ.trim().toLowerCase())),
+      lawDocs: LAWS, forms: FORMS,
+
+      officerStats: [
+        { v: '46', k: 'cases with this bench' }, { v: '9', k: 'hearings this week' },
+        { v: '4', k: 'orders to write' }, { v: '61', k: 'median days to disposal' },
+        { v: '37', k: 'projects reporting late' }
+      ],
+      queue: QUEUE.map(c => Object.assign({}, c, {
+        tagClass: c.tag,
+        ageStyle: { fontSize: '13px', color: parseInt(c.age, 10) > 180 ? 'var(--color-accent-700)' : 'var(--color-text)', fontWeight: parseInt(c.age, 10) > 180 ? 700 : 400 }
+      })),
+      bars: [['Mar', 74], ['Apr', 68], ['May', 71], ['Jun', 63], ['Jul', 58], ['Aug', 54]].map(([label, v]) => ({
+        label, style: { width: '100%', height: Math.round(v / 80 * 92) + 'px', background: v > 60 ? 'var(--color-accent-300)' : 'var(--color-accent)', borderTop: '1px solid var(--color-accent-700)' }
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>
