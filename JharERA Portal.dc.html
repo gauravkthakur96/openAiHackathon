@@ -1021,7 +1021,8 @@
     <div style="display:flex;flex-direction:column;gap:14px;margin-top:14px">
       <div class="field"><label>{{ loginIdLabel }}</label><input class="input" value="{{ loginIdValue }}" onChange="{{ onLoginIdValue }}" placeholder="{{ loginIdPh }}" style="background:var(--color-bg)"></div>
       <div class="field"><label>One-time password</label><input class="input" placeholder="Sent by SMS" style="background:var(--color-bg)"></div>
-      <button onClick="{{ goDash }}" class="btn btn-primary" style="height:42px">Sign in</button>
+      <button onClick="{{ goDash }}" class="btn btn-primary" style="height:42px">{{ loginButtonLabel }}</button>
+      <sc-if value="{{ loginError }}"><p style="font-size:13px;color:#a33;margin:0">{{ loginError }}</p></sc-if>
       <div style="font-size:12px;color:var(--color-neutral-600)">No account? Filing a complaint creates one for you automatically. Government officers sign in through the state SSO.</div>
     </div>
   </div>
@@ -1619,6 +1620,7 @@ class Component extends DCLogic {
     caseQ: 'JH/CMP/2026/00418', agentQ: '', orderQ: '', role: 'citizen',
 
     citizenId: null, authToken: null, citizenName: null, loginIdValue: '',
+    loggingIn: false, loginError: null,
     projects: PROJECTS, agents: AGENTS, orders: ORDERS, laws: LAWS, forms: FORMS,
     notices: NOTICES, leadership: LEADERSHIP, docs: DOCS, backendOnline: null,
 
@@ -1705,14 +1707,18 @@ class Component extends DCLogic {
   };
   doLogin = () => {
     const s = this.state;
+    this.setState({ loggingIn: true, loginError: null });
     apiPost('/auth/login', { role: s.role, identifier: s.loginIdValue })
       .then(data => {
         try { window.localStorage.setItem('jharera_auth', JSON.stringify(data)); } catch (e) {}
-        this.setState({ authToken: data.token, citizenName: data.profile.name });
+        this.setState({ authToken: data.token, citizenName: data.profile.name, loggingIn: false });
         this.navigate(s.role === 'officer' ? 'officer' : 'dash');
         if (s.role !== 'officer') this.loadDashboard();
       })
-      .catch(() => this.navigate(s.role === 'officer' ? 'officer' : 'dash'));
+      .catch(() => this.setState({
+        loggingIn: false,
+        loginError: 'Could not reach the server. If it has been idle for a while it can take up to a minute to wake up — wait a moment and try again.'
+      }));
   };
   logout = () => {
     try { window.localStorage.removeItem('jharera_auth'); } catch (e) {}
@@ -2118,6 +2124,8 @@ class Component extends DCLogic {
       loginIdLabel: s.role === 'promoter' ? 'PAN of the promoter' : s.role === 'agent' ? 'Agent registration number' : s.role === 'officer' ? 'Government email' : 'Mobile number',
       loginIdPh: s.role === 'promoter' ? 'AABCM1234K' : s.role === 'agent' ? 'JHARERA/A/RAN/2022/001871' : s.role === 'officer' ? 'name@jharkhand.gov.in' : '10 digits',
       loginIdValue: s.loginIdValue, onLoginIdValue: (e) => this.setState({ loginIdValue: e.target.value }),
+      loginButtonLabel: s.loggingIn ? 'Signing in…' : 'Sign in',
+      loginError: s.loginError,
       goDash: this.doLogin,
       dashDocs: [
         { name: 'Acknowledgement — JH/CMP/2026/00418', date: '02 Feb 2026' },
