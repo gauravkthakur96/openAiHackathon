@@ -7,4 +7,4 @@
 // sign-in, complaint filing, tracking and registration all reach it:
 //
 // window.JHARERA_API_BASE = 'https://your-backend.onrender.com/api';
-window.JHARERA_API_BASE = '';
+window.JHARERA_API_BASE = 'https://jharera-mock-backend.onrender.com/api';
