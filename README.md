@@ -43,13 +43,17 @@ real Node process (e.g. [Render](https://render.com) or
 [Railway](https://railway.app), both have free tiers), then point the
 frontend at it:
 
-1. **Backend**: create a new Node web service from this repo, with root
-   directory `server`, build command `npm install`, start command
-   `npm start`. Note the URL it gives you (e.g.
-   `https://jharera-mock-backend.onrender.com`) — data still persists to
-   `data.json` there, though most of these platforms use ephemeral disks, so
-   don't rely on it surviving a redeploy in production the way it does
-   locally.
+1. **Backend**: on [Render](https://render.com), choose **New +** → **Blueprint**
+   and point it at this repo — `render.yaml` at the project root already
+   defines the service (root directory `server`, build `npm install`, start
+   `npm start`), so Render sets it up without you filling those in by hand.
+   No account? Sign up free, connect GitHub, pick this repo. Once it's live,
+   copy the URL Render gives it (e.g. `https://jharera-mock-backend.onrender.com`)
+   — data still persists to `data.json` there, though most of these platforms
+   use ephemeral disks, so don't rely on it surviving a redeploy in production
+   the way it does locally. (No blueprint support on your host? Create a
+   plain Node web service instead, with root directory `server`, build
+   command `npm install`, start command `npm start`.)
 2. **Frontend**: edit `config.js` at the project root —
    ```js
    window.JHARERA_API_BASE = 'https://jharera-mock-backend.onrender.com/api';
