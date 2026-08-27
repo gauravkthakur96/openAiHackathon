@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Interactive mock portal for the Jharkhand Real Estate Regulatory Authority.">
 <title>JharERA Portal — Mock</title>
+<script src="/config.js"></script>
 <script src="/vendor/react.production.min.js"></script>
 <script src="/vendor/react-dom.production.min.js"></script>
 <script src="/support.js"></script>
@@ -1499,7 +1500,7 @@ const THEMES = {
 // Lightweight React-compatible client-side routing. It follows HashRouter
 // semantics so every portal view has a shareable URL on a plain static host,
 // while keeping this standalone mock free of a build step.
-const API_BASE = '/api';
+const API_BASE = (typeof window !== 'undefined' && window.JHARERA_API_BASE) || '/api';
 function apiGet(path) {
   return fetch(API_BASE + path).then(r => { if (!r.ok) throw new Error('request failed'); return r.json(); });
 }

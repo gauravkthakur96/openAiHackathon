@@ -21,6 +21,7 @@ app.use('/assets', express.static(path.join(ROOT, 'assets')));
 app.use('/vendor', express.static(path.join(ROOT, 'vendor')));
 app.use('/_ds', express.static(path.join(ROOT, '_ds')));
 app.get('/support.js', (req, res) => res.sendFile(path.join(ROOT, 'support.js')));
+app.get('/config.js', (req, res) => res.sendFile(path.join(ROOT, 'config.js')));
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 function formatDate(d) {

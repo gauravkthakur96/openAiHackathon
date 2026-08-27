@@ -1,0 +1,6 @@
+# Client-side routing fallback: any path that isn't a real static file
+# (e.g. /dashboard, /complaints/new, /projects/p1) serves the app shell,
+# which reads the route from the URL itself. Netlify only falls through to
+# this rule when no matching static file exists, so real assets and index.html
+# at "/" are served normally first.
+/*  /JharERA%20Portal.dc.html  200
