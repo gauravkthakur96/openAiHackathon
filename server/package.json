@@ -1,0 +1,15 @@
+{
+  "name": "jharera-mock-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Mock backend for the JharERA portal prototype. All data is synthetic; nothing here talks to a real government system.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  }
+}
